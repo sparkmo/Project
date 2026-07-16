@@ -1,0 +1,17 @@
+Return-Path: a@hi.xyz
+Received: from [10.0.0.128] (WIN-2F1VNVRVM11 [10.0.0.128])
+	by WIN-2F1VNVRVM11 with ESMTPA
+	; Thu, 16 Jul 2026 16:47:49 +0900
+Message-ID: <6f454b4b-e945-4feb-850b-9decd5b0c6ef@hi.xyz>
+Date: Thu, 16 Jul 2026 16:47:49 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: ko
+To: b@hi.xyz
+From: kim <a@hi.xyz>
+Subject: hi
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+hi
+
