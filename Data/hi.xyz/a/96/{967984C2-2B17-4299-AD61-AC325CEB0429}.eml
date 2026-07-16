@@ -1,0 +1,29 @@
+Return-Path: b@hi.xyz
+Received: from [10.0.0.128] (WIN-2F1VNVRVM11 [10.0.0.128]) by WIN-2F1VNVRVM11 with
+ ESMTPA ; Thu, 16 Jul 2026 16:28:33 +0900
+Message-ID: <76253bc9-ef1b-4f59-9354-339eecd0b640@hi.xyz>
+Date: Thu, 16 Jul 2026 16:28:33 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: ko
+To: a@hi.xyz
+From: lee <b@hi.xyz>
+Subject: rr
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Phishing: YES
+X-Spam-Score: 10
+
+안녕하세요.
+
+최근 사내 메일 계정에 비정상 로그인 시도가 확인되었습니다.
+
+계정 보호를 위해 아래 링크에서 로그인 후 비밀번호를 확인 및 변경해 주시기 
+바랍니다.
+
+http://ott.com
+
+확인을 완료하지 않을 경우 메일 서비스 이용이 제한될 수 있습니다.
+
+감사합니다.
+
