@@ -1,0 +1,9 @@
+# 환경변수 (실제 토큰/비밀값 포함)
+.env
+
+# 업로드된 실제 영상 파일 (폴더 구조만 유지)
+uploads/*
+!uploads/.gitkeep
+
+# OS / 에디터
+.DS_Store
