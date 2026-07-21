@@ -95,6 +95,53 @@ IMAP으로 직접 조회만 해서 보여주는 "뷰어" 역할만 합니다.
 4. **메일 서버 접속 정보** (`MAIL_HOST`/`MAIL_PORT`/`MAIL_ENCRYPTION`/`MAIL_VALIDATE_CERT`) —
    윈도우 메일 서버가 IMAP을 제공하는 주소/포트
 
+## 사전 준비 (최초 서버 세팅 시, Rocky/RHEL/AlmaLinux/CentOS 계열)
+
+Rocky Linux 등 RHEL 계열은 기본적으로 Docker가 설치되어 있지 않고 podman이
+기본 컨테이너 런타임입니다. `docker` 명령어가 podman을 흉내만 내는 상태로
+빌드/실행하면 각종 에러가 나므로, **이 프로젝트를 내려받기 전에 아래 순서대로
+진짜 Docker부터 설치**하세요.
+
+```bash
+# 1. podman이 docker 명령어를 가로채고 있다면 제거
+sudo dnf remove -y podman-docker
+
+# 2. Docker CE 공식 저장소 추가 (RHEL 계열은 centos용 저장소 사용)
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+# 3. Rocky 10 최소 설치본에 흔히 빠져있는 커널 모듈 설치 후 재부팅
+sudo dnf install -y kernel-modules-extra
+sudo reboot
+```
+
+재부팅 후 재접속해서 계속 진행:
+
+```bash
+# 4. Docker Engine + Compose 플러그인 설치
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# 5. 서비스 활성화
+sudo systemctl enable --now docker
+
+# 6. 설치 확인 (Server 항목이 "Docker Engine - Community"로 나와야 정상)
+docker version
+docker compose version
+```
+
+`docker version`에 `Emulate Docker CLI using podman...` 문구가 보이거나 `DOCKER_HOST`
+환경변수가 `unix:///run/podman/podman.sock`을 가리키고 있다면 아직 podman이 잡고
+있는 상태이니, 아래로 확인하고 원인이 되는 rc 파일에서 해당 줄을 지운 뒤 재로그인하세요.
+
+```bash
+echo $DOCKER_HOST
+grep -rn "DOCKER_HOST" ~/.bashrc ~/.bash_profile ~/.profile \
+    /root/.bashrc /root/.bash_profile /root/.profile \
+    /etc/environment /etc/profile.d/ 2>/dev/null
+```
+
+여기까지 확인됐으면 아래 "Docker로 실행" 단계로 넘어가세요.
+
 ## Docker로 실행
 
 ```bash
