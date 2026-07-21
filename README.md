@@ -74,13 +74,88 @@ API에 메타데이터(문자열)만 전달됩니다.
 3. **`uploads/` 디렉토리 쓰기 권한** — 컨테이너 안 `www-data`가 쓸 수 있어야
    직접 업로드 기능이 동작합니다.
 
-## Docker로 실행
+## 사전 준비 (Ubuntu/AWS EC2, 최초 1회)
+
+Ubuntu는 Rocky/RHEL 계열과 달리 podman이 기본으로 깔려있지 않아서 훨씬 간단합니다.
 
 ```bash
-cp .env.example .env   # INTRANET_API_TOKEN 값 채우기
-docker compose up --build
-# http://localhost:8000
+# 1. 필요한 패키지 + Docker 공식 GPG 키 등록
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# 2. Docker 공식 저장소 추가
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+
+# 3. Docker Engine + Compose 플러그인 설치
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# 4. 서비스 활성화
+sudo systemctl enable --now docker
+
+# 5. sudo 없이 docker 쓰려면 현재 계정을 docker 그룹에 추가
+sudo usermod -aG docker $USER
 ```
+
+5번 실행 후에는 **로그아웃 후 재접속**(또는 `newgrp docker`)해야 그룹 권한이 적용됩니다.
+
+```bash
+docker version
+docker compose version
+```
+
+두 명령 다 정상 출력되면 준비 완료입니다.
+
+> **AWS 보안그룹(Security Group) 확인 필수** — 이 앱은 8000번 포트를 씁니다.
+> EC2 인스턴스의 보안그룹 인바운드 규칙에 **TCP 8000번 포트**(테스트 중엔 내 IP만,
+> 필요하면 0.0.0.0/0)가 열려있지 않으면, 컨테이너가 멀쩡히 떠 있어도 외부에서
+> 접속이 안 됩니다. 서버 안에서 `docker compose ps`로 컨테이너 상태 확인하는 것과는
+> 별개의 문제이니 꼭 같이 확인하세요.
+
+## 프로젝트 받기 & 실행
+
+```bash
+# 1. 소스 받기 (git clone 또는 zip 업로드 후 압축 해제)
+cd ~
+# git clone -b <브랜치명> <repo주소>.git
+cd Project-WebServer
+
+# 2. .env 생성 (인트라넷 서버 쪽 INTRANET_API_MASTER_TOKEN과 반드시 동일한 값으로)
+cp .env.example .env
+vi .env   # INTRANET_API_TOKEN 값 채우기
+
+# 3. 빌드 + 백그라운드 실행
+docker compose up --build -d
+
+# 4. 상태 확인
+docker compose ps
+docker compose logs -f web
+```
+
+정상적으로 뜨면 `http://<EC2 퍼블릭 IP>:8000` 접속.
+
+> **인트라넷 API 서버가 아직 로컬에 없다면**: `config/intranet.php`의
+> `INTRANET_HOST`(기본값 `http://192.168.20.10`)로 실제 접속이 안 되면, 로그인/
+> 가입/영상목록처럼 인트라넷 API를 호출하는 기능은 전부 "인트라넷 서버에
+> 연결할 수 없습니다" 에러가 뜹니다. 인트라넷 서버(별도 저장소)를 같은 서버에
+> Docker로 같이 띄웠다면, `docker-compose.yml` 하단에 주석 처리된 `intranet` 서비스
+> 블록을 참고해서 두 프로젝트를 같은 docker 네트워크로 묶고 `INTRANET_HOST`를
+> 그 서비스명(예: `http://intranet-api`)으로 바꿔주세요.
+
+## 자주 막히는 지점 체크리스트
+
+- `docker compose ps`엔 `Up`인데 브라우저 접속이 안 됨 → AWS 보안그룹 8000번 포트 확인
+- 로그인/가입 시도 시 "인트라넷 서버에 연결할 수 없습니다" → `INTRANET_HOST`가
+  가리키는 주소에 인트라넷 API가 실제로 떠 있고, 이 서버에서 네트워크로 닿는지 확인
+  (`docker compose exec web curl -v <INTRANET_HOST>/api/auth.php`)
+- 로그인/가입은 되는데 매번 실패("토큰 불일치" 류) → `.env`의 `INTRANET_API_TOKEN`이
+  인트라넷 서버 `.env`의 `INTRANET_API_MASTER_TOKEN`과 정확히 같은 값인지 확인
 
 ## 보안 참고
 
