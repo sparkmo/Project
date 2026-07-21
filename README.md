@@ -120,7 +120,17 @@ sudo reboot
 ```bash
 # 4. Docker Engine + Compose 플러그인 설치
 sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 
+> **위 4번 명령이 `Could not connect to server` / `baseos` 관련 에러로 실패하면**,
+> 서버 네트워크에서 Rocky 공식 미러(`mirrors.rockylinux.org`)가 막혀있는 경우입니다.
+> Docker 설치엔 필요 없는 저장소이니 아래처럼 빼고 설치하세요.
+> ```bash
+> sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+>     --disablerepo=baseos --disablerepo=appstream --disablerepo=extras
+> ```
+
+```bash
 # 5. 서비스 활성화
 sudo systemctl enable --now docker
 
@@ -142,13 +152,34 @@ grep -rn "DOCKER_HOST" ~/.bashrc ~/.bash_profile ~/.profile \
 
 여기까지 확인됐으면 아래 "Docker로 실행" 단계로 넘어가세요.
 
-## Docker로 실행
+## 프로젝트 받기 & 실행
 
 ```bash
-cp .env.example .env   # 위 항목들의 실제 값 채우기
-docker compose up --build
-# http://localhost:8001
+# 1. 저장소 클론
+git clone -b AdminServer https://github.com/sparkmo/Project.git
+cd Project
+
+# 2. .env 생성 (저장소엔 실제 값이 없으므로 반드시 채워야 함)
+cp .env.example .env
+nano .env   # DB_PASS, MEMBER_DB_PASS, INTRANET_API_MASTER_TOKEN 등 "실행에 필요한 것" 항목 채우기
+
+# 3. 빌드 + 백그라운드 실행
+docker compose up --build -d
+
+# 4. 상태 확인
+docker compose ps
+docker compose logs -f intranet
 ```
+
+정상적으로 뜨면 브라우저에서 `http://<서버 IP>:8001` 접속.
+
+## 자주 막히는 지점 체크리스트
+
+- `docker compose ps`에 컨테이너가 하나도 안 보임 → `.env` 없이 실행한 경우가 많음. 위 2번 단계 확인.
+- 이미지 다운로드 중 `Please select an image` 프롬프트가 뜸 → podman 환경일 때 나오는 정상 동작.
+  `docker.io/library/...` 항목 선택 (진짜 Docker로 설치했다면 안 뜸).
+- 8001 포트 접속이 안 됨 → `docker compose ps`로 컨테이너가 `Up` 상태인지, 서버 방화벽/보안그룹에서
+  8001이 열려있는지 확인.
 
 ## 보안 참고
 
