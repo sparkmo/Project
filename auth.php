@@ -27,10 +27,21 @@ function require_admin() {
     }
 }
 
-/** 현재 로그인한 사용자 정보 (DB 재조회) */
+/**
+ * 현재 로그인한 사용자 정보 (DB 재조회)
+ * 실제 스키마는 intranet_db.employee (employee_id/login_id/department/role) 이지만,
+ * 나머지 코드(header.php, index.php, notice/*.php 등)가 기존 필드명
+ * (id/username/dept/grade)을 그대로 쓰고 있어서 AS로 별칭만 맞춰줍니다.
+ * role은 'Admin'/'Manager'/'User'(대문자)라서 LOWER()로 소문자화 —
+ * 기존 코드의 grade === 'admin' 비교와 호환하기 위함 (Manager는 '일반' 취급됨).
+ */
 function current_user(PDO $pdo) {
     if (!is_logged_in()) return null;
-    $stmt = $pdo->prepare('SELECT id, username, name, dept, grade, email FROM users WHERE id = ?');
+    $stmt = $pdo->prepare(
+        'SELECT employee_id AS id, login_id AS username, name, department AS dept,
+                LOWER(role) AS grade, email, created_at
+         FROM employee WHERE employee_id = ?'
+    );
     $stmt->execute([$_SESSION['user_id']]);
     return $stmt->fetch();
 }
@@ -38,13 +49,22 @@ function current_user(PDO $pdo) {
 /**
  * 로그인 시도
  * 성공 시 세션에 사용자 정보를 저장하고 true 반환
+ *
+ * ⚠️ [VULN] employee.password는 bcrypt 해시가 아니라 평문으로 저장되어 있습니다
+ *    (실제 덤프 확인: 'admin01' 계정 비밀번호가 '1234' 그대로). 원래 코드는
+ *    password_verify()를 썼지만 실제 스키마엔 해시가 없으므로 hash_equals()로
+ *    평문 비교만 합니다. 운영 전환 전 반드시 password_hash()로 재해싱하고
+ *    로그인 로직도 password_verify()로 되돌려야 합니다.
  */
 function attempt_login(PDO $pdo, string $username, string $password) {
-    $stmt = $pdo->prepare('SELECT id, username, password_hash, name, grade FROM users WHERE username = ?');
+    $stmt = $pdo->prepare(
+        'SELECT employee_id AS id, login_id AS username, password, name, LOWER(role) AS grade
+         FROM employee WHERE login_id = ?'
+    );
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    if (!$user || !password_verify($password, $user['password_hash'])) {
+    if (!$user || !hash_equals((string)$user['password'], $password)) {
         return false;
     }
 

@@ -18,7 +18,7 @@ define('DB_CHARSET', 'utf8mb4');
 //    절대 배포하지 않습니다. (최소 권한 원칙 - 회원DB는 인트라넷 경유로만 접근)
 define('MEMBER_DB_HOST', getenv('MEMBER_DB_HOST') ?: '172.16.0.10');
 define('MEMBER_DB_PORT', (int)(getenv('MEMBER_DB_PORT') ?: 3308));
-define('MEMBER_DB_NAME', getenv('MEMBER_DB_NAME') ?: 'member_db');
+define('MEMBER_DB_NAME', getenv('MEMBER_DB_NAME') ?: 'ott'); // 실제 DB명은 member_db가 아니라 ott
 define('MEMBER_DB_USER', getenv('MEMBER_DB_USER') ?: 'member_admin');
 define('MEMBER_DB_PASS', getenv('MEMBER_DB_PASS') ?: '');
 

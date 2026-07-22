@@ -8,21 +8,27 @@ $errors = [];
 $success = '';
 
 // 등급 변경 처리
+// 실제 스키마의 role은 Admin/Manager/User 3단계지만, 이 화면은 원래 admin/user
+// 2단계 토글만 지원하므로 Manager는 다루지 않고 Admin<->User만 전환합니다.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'change_grade') {
     $target_id = (int)($_POST['user_id'] ?? 0);
-    $new_grade = ($_POST['grade'] ?? '') === 'admin' ? 'admin' : 'user';
+    $new_grade = ($_POST['grade'] ?? '') === 'admin' ? 'Admin' : 'User';
 
     if ($target_id === (int)$me['id']) {
         $errors[] = '본인의 등급은 변경할 수 없습니다.';
     } else {
-        $stmt = $pdo->prepare('UPDATE users SET grade = ? WHERE id = ?');
+        $stmt = $pdo->prepare('UPDATE employee SET role = ? WHERE employee_id = ?');
         $stmt->execute([$new_grade, $target_id]);
         log_action($pdo, $me['id'], 'admin_change_grade', 'user_id=' . $target_id . ' -> ' . $new_grade);
         $success = '등급이 변경되었습니다.';
     }
 }
 
-$users = $pdo->query('SELECT id, username, name, dept, grade, email, created_at FROM users ORDER BY id')->fetchAll();
+$users = $pdo->query(
+    'SELECT employee_id AS id, login_id AS username, name, department AS dept,
+            LOWER(role) AS grade, email, created_at
+     FROM employee ORDER BY employee_id'
+)->fetchAll();
 
 $page_title  = '관리자 - 계정 관리';
 $active_menu = 'admin';
