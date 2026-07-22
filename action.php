@@ -10,7 +10,7 @@ $id   = (int)($_GET['id'] ?? 0);
 switch ($type) {
 
     case 'notice_delete':
-        $stmt = $pdo->prepare('SELECT author_id FROM notices WHERE id = ?');
+        $stmt = $pdo->prepare('SELECT employee_id AS author_id FROM notice WHERE notice_id = ?');
         $stmt->execute([$id]);
         $notice = $stmt->fetch();
 
@@ -23,7 +23,7 @@ switch ($type) {
             exit;
         }
 
-        $pdo->prepare('DELETE FROM notices WHERE id = ?')->execute([$id]);
+        $pdo->prepare('DELETE FROM notice WHERE notice_id = ?')->execute([$id]);
         log_action($pdo, $me['id'], 'delete_notice', 'notice_id=' . $id);
         header('Location: /notice/list.php');
         exit;

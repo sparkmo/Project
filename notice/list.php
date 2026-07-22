@@ -7,13 +7,13 @@ $per_page = 15;
 $page = max(1, (int)($_GET['page'] ?? 1));
 $offset = ($page - 1) * $per_page;
 
-$total = (int)$pdo->query('SELECT COUNT(*) FROM notices')->fetchColumn();
+$total = (int)$pdo->query('SELECT COUNT(*) FROM notice')->fetchColumn();
 $total_pages = max(1, (int)ceil($total / $per_page));
 
 $stmt = $pdo->prepare(
-    'SELECT n.id, n.title, n.is_pinned, n.view_count, n.created_at, u.name AS author_name
-     FROM notices n JOIN users u ON u.id = n.author_id
-     ORDER BY n.is_pinned DESC, n.created_at DESC
+    'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name
+     FROM notice n JOIN employee e ON e.employee_id = n.employee_id
+     ORDER BY n.created_at DESC
      LIMIT :limit OFFSET :offset'
 );
 $stmt->bindValue(':limit', $per_page, PDO::PARAM_INT);
@@ -37,18 +37,16 @@ require __DIR__ . '/../includes/header.php';
     <?php else: ?>
         <table class="data-table">
             <thead>
-                <tr><th style="width:60px;">번호</th><th>제목</th><th style="width:100px;">작성자</th><th style="width:100px;">조회수</th><th style="width:140px;">작성일</th></tr>
+                <tr><th style="width:60px;">번호</th><th>제목</th><th style="width:100px;">작성자</th><th style="width:140px;">작성일</th></tr>
             </thead>
             <tbody>
             <?php foreach ($notices as $n): ?>
                 <tr>
                     <td><?= (int)$n['id'] ?></td>
                     <td>
-                        <?php if ($n['is_pinned']): ?><span class="badge badge-pinned">고정</span> <?php endif; ?>
                         <a href="/notice/view.php?id=<?= (int)$n['id'] ?>"><?= htmlspecialchars($n['title']) ?></a>
                     </td>
                     <td><?= htmlspecialchars($n['author_name']) ?></td>
-                    <td><?= (int)$n['view_count'] ?></td>
                     <td><?= htmlspecialchars(format_datetime($n['created_at'])) ?></td>
                 </tr>
             <?php endforeach; ?>

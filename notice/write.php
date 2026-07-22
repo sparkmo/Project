@@ -9,15 +9,14 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title   = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
-    $is_pinned = ($_POST['is_pinned'] ?? '') === '1' && $me['grade'] === 'admin' ? 1 : 0;
 
     if ($title === '' || $content === '') {
         $error = '제목과 내용을 모두 입력해주세요.';
     } else {
         $stmt = $pdo->prepare(
-            'INSERT INTO notices (title, content, author_id, is_pinned) VALUES (?, ?, ?, ?)'
+            'INSERT INTO notice (title, content, employee_id) VALUES (?, ?, ?)'
         );
-        $stmt->execute([$title, $content, $me['id'], $is_pinned]);
+        $stmt->execute([$title, $content, $me['id']]);
         $new_id = $pdo->lastInsertId();
         log_action($pdo, $me['id'], 'create_notice', 'notice_id=' . $new_id);
         header('Location: /notice/view.php?id=' . $new_id);
@@ -52,14 +51,6 @@ require __DIR__ . '/../includes/header.php';
             <label for="content">내용</label>
             <textarea id="content" name="content" required><?= htmlspecialchars($_POST['content'] ?? '') ?></textarea>
         </div>
-        <?php if ($me['grade'] === 'admin'): ?>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" name="is_pinned" value="1" style="width:auto;">
-                상단 고정
-            </label>
-        </div>
-        <?php endif; ?>
         <button type="submit" class="btn btn-primary">등록</button>
         <a href="/notice/list.php" class="btn btn-ghost">취소</a>
     </form>

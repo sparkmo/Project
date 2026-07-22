@@ -6,7 +6,10 @@ require_login();
 $me = current_user($pdo);
 $id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
 
-$stmt = $pdo->prepare('SELECT * FROM notices WHERE id = ?');
+$stmt = $pdo->prepare(
+    'SELECT notice_id AS id, employee_id AS author_id, title, content, created_at
+     FROM notice WHERE notice_id = ?'
+);
 $stmt->execute([$id]);
 $notice = $stmt->fetch();
 
@@ -26,15 +29,14 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title   = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
-    $is_pinned = ($_POST['is_pinned'] ?? '') === '1' && $me['grade'] === 'admin' ? 1 : $notice['is_pinned'];
 
     if ($title === '' || $content === '') {
         $error = '제목과 내용을 모두 입력해주세요.';
     } else {
         $stmt = $pdo->prepare(
-            'UPDATE notices SET title = ?, content = ?, is_pinned = ? WHERE id = ?'
+            'UPDATE notice SET title = ?, content = ? WHERE notice_id = ?'
         );
-        $stmt->execute([$title, $content, $is_pinned, $id]);
+        $stmt->execute([$title, $content, $id]);
         log_action($pdo, $me['id'], 'modify_notice', 'notice_id=' . $id);
         header('Location: /notice/view.php?id=' . $id);
         exit;
@@ -70,14 +72,6 @@ require __DIR__ . '/../includes/header.php';
             <label for="content">내용</label>
             <textarea id="content" name="content" required><?= htmlspecialchars($notice['content']) ?></textarea>
         </div>
-        <?php if ($me['grade'] === 'admin'): ?>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" name="is_pinned" value="1" style="width:auto;" <?= $notice['is_pinned'] ? 'checked' : '' ?>>
-                상단 고정
-            </label>
-        </div>
-        <?php endif; ?>
         <button type="submit" class="btn btn-primary">저장</button>
         <a href="/notice/view.php?id=<?= (int)$id ?>" class="btn btn-ghost">취소</a>
     </form>

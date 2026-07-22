@@ -9,13 +9,11 @@ if ($id <= 0) {
     exit;
 }
 
-// 조회수 증가
-$pdo->prepare('UPDATE notices SET view_count = view_count + 1 WHERE id = ?')->execute([$id]);
-
 $stmt = $pdo->prepare(
-    'SELECT n.*, u.name AS author_name
-     FROM notices n JOIN users u ON u.id = n.author_id
-     WHERE n.id = ?'
+    'SELECT n.notice_id AS id, n.employee_id AS author_id, n.title, n.content, n.created_at,
+            e.name AS author_name
+     FROM notice n JOIN employee e ON e.employee_id = n.employee_id
+     WHERE n.notice_id = ?'
 );
 $stmt->execute([$id]);
 $notice = $stmt->fetch();
@@ -51,7 +49,7 @@ require __DIR__ . '/../includes/header.php';
 <div class="card">
     <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:12px; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:12px;">
         <span><?= htmlspecialchars($notice['author_name']) ?></span>
-        <span><?= htmlspecialchars(format_datetime($notice['created_at'])) ?> · 조회 <?= (int)$notice['view_count'] ?></span>
+        <span><?= htmlspecialchars(format_datetime($notice['created_at'])) ?></span>
     </div>
     <div style="white-space: pre-wrap; line-height:1.8;"><?= htmlspecialchars($notice['content']) ?></div>
 </div>

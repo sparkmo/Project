@@ -5,11 +5,11 @@ require_login();
 
 $me = current_user($pdo);
 
-// 최근 공지 5건 (고정글 우선)
+// 최근 공지 5건
 $notices = $pdo->query(
-    'SELECT n.id, n.title, n.is_pinned, n.created_at, u.name AS author_name
-     FROM notices n JOIN users u ON u.id = n.author_id
-     ORDER BY n.is_pinned DESC, n.created_at DESC LIMIT 5'
+    'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name
+     FROM notice n JOIN employee e ON e.employee_id = n.employee_id
+     ORDER BY n.created_at DESC LIMIT 5'
 )->fetchAll();
 
 // 씨네나잇 회원/영상 수 (member_db 접속 실패해도 대시보드 전체가 죽지 않도록 별도 try)
@@ -65,7 +65,6 @@ require __DIR__ . '/includes/header.php';
             <?php foreach ($notices as $n): ?>
                 <tr>
                     <td>
-                        <?php if ($n['is_pinned']): ?><span class="badge badge-pinned">고정</span> <?php endif; ?>
                         <a href="/notice/view.php?id=<?= (int)$n['id'] ?>"><?= htmlspecialchars($n['title']) ?></a>
                     </td>
                     <td><?= htmlspecialchars($n['author_name']) ?></td>
