@@ -95,7 +95,15 @@ IMAP으로 직접 조회만 해서 보여주는 "뷰어" 역할만 합니다.
 4. **메일 서버 접속 정보** (`MAIL_HOST`/`MAIL_PORT`/`MAIL_ENCRYPTION`/`MAIL_VALIDATE_CERT`) —
    윈도우 메일 서버가 IMAP을 제공하는 주소/포트
 
-## 사전 준비 (최초 서버 세팅 시, Rocky/RHEL/AlmaLinux/CentOS 계열)
+## `intranet_db` 서버가 아직 안 붙어있을 때
+
+`common.php`는 `intranet_db` 접속에 실패해도 페이지를 죽이지 않고 `$pdo = null`로
+넘어가도록 되어 있어서, **DB 서버 없이 컨테이너만 띄워도 `/login.php` 화면은 정상
+표시**됩니다 (로그인 버튼을 누르면 "DB 서버에 연결할 수 없습니다" 메시지만 뜸).
+단, 로그인 자체은 DB 없이는 불가능하고, 세션이 이미 로그인된 상태에서 DB가 나중에
+끊기는 경우는 별도로 방어돼 있지 않습니다.
+
+ (최초 서버 세팅 시, Rocky/RHEL/AlmaLinux/CentOS 계열)
 
 Rocky Linux 등 RHEL 계열은 기본적으로 Docker가 설치되어 있지 않고 podman이
 기본 컨테이너 런타임입니다. `docker` 명령어가 podman을 흉내만 내는 상태로
