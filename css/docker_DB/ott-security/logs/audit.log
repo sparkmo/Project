@@ -1,0 +1,7 @@
+20260716 08:42:14,78e4f88b9651,root,localhost,7,33,QUERY,,'SET GLOBAL server_audit_logging=ON',0
+20260716 08:42:18,78e4f88b9651,root,localhost,7,34,QUERY,,'SHOW VARIABLES LIKE \'server_audit_logging\'',0
+20260716 08:43:44,78e4f88b9651,root,localhost,7,35,QUERY,,'SELECT DATABASE()',0
+20260716 08:43:44,78e4f88b9651,root,localhost,7,37,QUERY,ott,'show databases',0
+20260716 08:43:44,78e4f88b9651,root,localhost,7,38,QUERY,ott,'show tables',0
+20260716 08:43:48,78e4f88b9651,root,localhost,7,40,QUERY,ott,'select * from users',0
+20260716 08:43:50,78e4f88b9651,root,localhost,7,0,DISCONNECT,ott,TLSv1.3,0
