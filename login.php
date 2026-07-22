@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = (string)($_POST['password'] ?? '');
 
-    if ($username === '' || $password === '') {
+    if ($pdo === null) {
+        $error = 'DB 서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.';
+    } elseif ($username === '' || $password === '') {
         $error = '아이디와 비밀번호를 모두 입력해주세요.';
     } elseif (attempt_login($pdo, $username, $password)) {
         log_action($pdo, $_SESSION['user_id'], 'login');

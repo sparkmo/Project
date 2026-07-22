@@ -43,17 +43,20 @@ define('INTRANET_API_MASTER_TOKEN', getenv('INTRANET_API_MASTER_TOKEN') ?: '');
 // 자세한 내용/보안 참고는 config/mail.php 및 README.md 참고.
 require_once __DIR__ . '/config/mail.php';
 
+// DB 서버가 아직 안 붙어있어도(연결 실패해도) 로그인 화면 자체는 뜨도록,
+// 여기서 die() 시키지 않고 $pdo = null 로 두고 넘어갑니다.
+// (로그인 자체는 attempt_login()에서 $pdo가 null이면 실패 처리하도록 별도 방어)
 try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
     $pdo = new PDO($dsn, DB_USER, DB_PASS, [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
+        PDO::ATTR_TIMEOUT            => 3, // DB가 안 떠 있을 때 페이지가 오래 멈춰있지 않도록
     ]);
 } catch (PDOException $e) {
-    // 운영 환경에서는 상세 에러 메시지를 노출하지 않습니다.
     error_log('DB 연결 실패: ' . $e->getMessage());
-    die('일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    $pdo = null;
 }
 
 /**
