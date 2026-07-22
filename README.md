@@ -164,7 +164,7 @@ cp .env.example .env
 nano .env   # DB_PASS, MEMBER_DB_PASS, INTRANET_API_MASTER_TOKEN 등 "실행에 필요한 것" 항목 채우기
 
 # 3. 빌드 + 백그라운드 실행
-docker compose up --build -d
+sudo docker compose up --build -d
 
 # 4. 상태 확인
 docker compose ps
