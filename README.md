@@ -87,8 +87,15 @@ docker run -itd \
   -v /docker/ott-security/conf/audit.cnf:/etc/mysql/conf.d/audit.cnf:ro \
   -v /docker/ott-security/logs:/var/log/mariadb \
   chaning1004/ott_db:v2
-```
 
+# 위에서 안될경우 밑에것으로 실행
+# 2. 빌드 + 백그라운드 실행
+sudo docker compose up --build -d
+
+# 4. 상태 확인
+docker compose ps
+docker compose logs -f intranet
+```
 - `MARIADB_ROOT_PASSWORD` : root 비밀번호
 - `MARIADB_DATABASE=ott` : 최초 기동 시 빈 `ott` 데이터베이스 자동 생성
   (이미지 안에 이미 데이터가 구워져 있다면 이 옵션은 사실상 무의미 — 상관없음)
