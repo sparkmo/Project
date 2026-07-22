@@ -1,0 +1,29 @@
+services:
+  # --- 실제 DB 서버 ---
+  # intranet_db, ott(회원 DB) 둘 다 이 한 대의 MariaDB 인스턴스가 서비스합니다.
+  # (ott-security/logs/audit.log 를 보면 두 DB 접속 기록이 같은 로그 파일에 섞여
+  #  있는데, 이게 바로 "서버 1대, DB 2개" 구성이라는 근거입니다.)
+  #
+  # 포트 2개(3306, 3308)를 같은 컨테이너 포트(3306)에 매핑해 둔 건, AdminServer
+  # 쪽 기존 관례(DB_PORT는 기본 3306, MEMBER_DB_PORT는 3308)를 그대로 살리기
+  # 위함이며 실제로는 같은 서버/같은 포트입니다.
+  db:
+    image: docker.io/library/mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpass}
+      MARIADB_AUTO_UPGRADE: "1"
+    ports:
+      - "3306:3306"
+      - "3308:3306"
+    volumes:
+      - ./ott-security/conf/audit.cnf:/etc/mysql/conf.d/audit.cnf:ro
+      - ./ott-security/init/00-create-app-users.sql:/docker-entrypoint-initdb.d/00-create-app-users.sql:ro
+      - ./ott-security/dump/intranet_db.sql:/docker-entrypoint-initdb.d/01-intranet_db.sql:ro
+      - ./ott-security/dump/ott.sql:/docker-entrypoint-initdb.d/02-ott.sql:ro
+      - ./ott-security/init/03-adminserver-app-support.sql:/docker-entrypoint-initdb.d/03-adminserver-app-support.sql:ro
+      - ./ott-security/logs:/var/log/mariadb
+      - db-data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db-data:

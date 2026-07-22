@@ -1,0 +1,91 @@
+20260716 08:42:14,78e4f88b9651,root,localhost,7,33,QUERY,,'SET GLOBAL server_audit_logging=ON',0
+20260716 08:42:18,78e4f88b9651,root,localhost,7,34,QUERY,,'SHOW VARIABLES LIKE \'server_audit_logging\'',0
+20260716 08:43:44,78e4f88b9651,root,localhost,7,35,QUERY,,'SELECT DATABASE()',0
+20260716 08:43:44,78e4f88b9651,root,localhost,7,37,QUERY,ott,'show databases',0
+20260716 08:43:44,78e4f88b9651,root,localhost,7,38,QUERY,ott,'show tables',0
+20260716 08:43:48,78e4f88b9651,root,localhost,7,40,QUERY,ott,'select * from users',0
+20260716 08:43:50,78e4f88b9651,root,localhost,7,0,DISCONNECT,ott,TLSv1.3,0
+20260717 05:00:46,5a7e563656d8,root,localhost,5,22,QUERY,,'SET GLOBAL server_audit_logging = ON',0
+20260717 05:00:49,5a7e563656d8,root,localhost,5,23,QUERY,,'SHOW VARIABLES LIKE \'server_audit_logging\'',0
+20260717 05:02:32,5a7e563656d8,root,localhost,5,0,DISCONNECT,,TLSv1.3,0
+20260720 23:58:36,78e4f88b9651,root,localhost,3,0,CONNECT,,TLSv1.3,0
+20260720 23:58:36,78e4f88b9651,root,localhost,3,1,QUERY,,'select @@version_comment limit 1',0
+20260720 23:58:47,78e4f88b9651,root,localhost,3,2,QUERY,,'SELECT DATABASE()',0
+20260720 23:58:47,78e4f88b9651,root,localhost,3,4,QUERY,ott,'show databases',0
+20260720 23:58:47,78e4f88b9651,root,localhost,3,5,QUERY,ott,'show tables',0
+20260720 23:58:52,78e4f88b9651,root,localhost,3,7,QUERY,ott,'select * from users',0
+20260720 23:58:55,78e4f88b9651,root,localhost,3,0,DISCONNECT,ott,TLSv1.3,0
+20260720 23:59:43,78e4f88b9651,root,localhost,4,0,CONNECT,,TLSv1.3,0
+20260720 23:59:43,78e4f88b9651,root,localhost,4,9,QUERY,,'select @@version_comment limit 1',0
+20260720 23:59:48,78e4f88b9651,root,localhost,4,10,QUERY,,'SELECT DATABASE()',0
+20260720 23:59:48,78e4f88b9651,root,localhost,4,12,QUERY,ott,'show databases',0
+20260720 23:59:48,78e4f88b9651,root,localhost,4,13,QUERY,ott,'show tables',0
+20260720 23:59:51,78e4f88b9651,root,localhost,4,15,QUERY,ott,'show tables',0
+20260721 00:00:01,78e4f88b9651,root,localhost,4,16,QUERY,ott,'select * from users',0
+20260721 00:00:03,78e4f88b9651,root,localhost,4,0,DISCONNECT,ott,TLSv1.3,0
+20260721 00:01:31,78e4f88b9651,root,localhost,5,0,CONNECT,,TLSv1.3,0
+20260721 00:01:31,78e4f88b9651,root,localhost,5,18,QUERY,,'select @@version_comment limit 1',0
+20260721 00:01:38,78e4f88b9651,root,localhost,5,19,QUERY,,'SELECT DATABASE()',0
+20260721 00:01:38,78e4f88b9651,root,localhost,5,21,QUERY,ott,'show databases',0
+20260721 00:01:38,78e4f88b9651,root,localhost,5,22,QUERY,ott,'show tables',0
+20260721 00:01:45,78e4f88b9651,root,localhost,5,24,QUERY,ott,'show tables',0
+20260721 00:02:26,78e4f88b9651,root,localhost,5,25,QUERY,ott,'SHOW VARIABLES LIKE \'server_audit_logging\'',0
+20260721 00:02:26,78e4f88b9651,root,localhost,5,26,QUERY,ott,'SHOW VARIABLES LIKE \'server_audit_output_type\'',0
+20260721 00:02:26,78e4f88b9651,root,localhost,5,27,QUERY,ott,'SHOW VARIABLES LIKE \'server_audit_file_path\'',0
+20260721 00:02:27,78e4f88b9651,root,localhost,5,28,QUERY,ott,'SHOW VARIABLES LIKE \'server_audit_events\'',0
+20260721 00:02:41,78e4f88b9651,root,localhost,5,0,DISCONNECT,ott,TLSv1.3,0
+20260721 09:45:15,78e4f88b9651,root,localhost,6,0,FAILED_CONNECT,,TLSv1.3,1045
+20260721 09:45:15,78e4f88b9651,root,localhost,6,0,DISCONNECT,,TLSv1.3,0
+20260721 09:45:25,78e4f88b9651,root,localhost,7,0,CONNECT,,TLSv1.3,0
+20260721 09:45:25,78e4f88b9651,root,localhost,7,30,QUERY,,'select @@version_comment limit 1',0
+20260721 09:48:00,78e4f88b9651,root,localhost,7,0,DISCONNECT,,TLSv1.3,0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,0,CONNECT,,TLSv1.3,0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,32,QUERY,,'/*M 999999 enable the sandbox mode */ \n\n\n\n\n\n\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,33,QUERY,,'/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,34,QUERY,,'/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,35,QUERY,,'/*!40101 SET NAMES utf8mb4 */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,36,QUERY,,'/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,37,QUERY,,'/*!40103 SET TIME_ZONE=\'+00:00\' */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,38,QUERY,,'/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,39,QUERY,,'/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,40,QUERY,,'/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=\'NO_AUTO_VALUE_ON_ZERO\' */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,41,QUERY,,'/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,42,QUERY,,'CREATE DATABASE /*!32312 IF NOT EXISTS*/ `intranet_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,43,QUERY,,'SELECT DATABASE()',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,45,QUERY,intranet_db,'DROP TABLE IF EXISTS `employee`',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,46,QUERY,intranet_db,'/*!40101 SET @saved_cs_client     = @@character_set_client */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,47,QUERY,intranet_db,'/*!40101 SET character_set_client = utf8mb4 */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,48,QUERY,intranet_db,'CREATE TABLE `employee` (\n  `employee_id` bigint(20) NOT NULL AUTO_INCREMENT,\n  `login_id` varchar(30) NOT NULL,\n  `password` varchar(255) NOT NULL,\n  `name` varchar(30) NOT NULL,\n  `department` varchar(30) NOT NULL,\n  `role` enum(\'Admin\',\'Manager\',\'User\') NOT NULL DEFAULT \'User\',\n  `email` varchar(100) NOT NULL,\n  PRIMARY KEY (`employee_id`),\n  UNIQUE KEY `login_id` (`login_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,49,QUERY,intranet_db,'/*!40101 SET character_set_client = @saved_cs_client */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,50,QUERY,intranet_db,'LOCK TABLES `employee` WRITE',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,51,QUERY,intranet_db,'/*!40000 ALTER TABLE `employee` DISABLE KEYS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,52,QUERY,intranet_db,'INSERT INTO `employee` VALUES\n(1,\'admin01\',\'1234\',\'관리자\',\'보안팀\',\'Admin\',\'admin@company.com\')',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,53,QUERY,intranet_db,'/*!40000 ALTER TABLE `employee` ENABLE KEYS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,54,QUERY,intranet_db,'UNLOCK TABLES',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,55,QUERY,intranet_db,'DROP TABLE IF EXISTS `notice`',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,56,QUERY,intranet_db,'/*!40101 SET @saved_cs_client     = @@character_set_client */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,57,QUERY,intranet_db,'/*!40101 SET character_set_client = utf8mb4 */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,58,QUERY,intranet_db,'CREATE TABLE `notice` (\n  `notice_id` bigint(20) NOT NULL AUTO_INCREMENT,\n  `employee_id` bigint(20) NOT NULL,\n  `title` varchar(100) NOT NULL,\n  `content` text NOT NULL,\n  `created_at` datetime DEFAULT current_timestamp(),\n  PRIMARY KEY (`notice_id`),\n  KEY `fk_notice_employee` (`employee_id`),\n  CONSTRAINT `fk_notice_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,59,QUERY,intranet_db,'/*!40101 SET character_set_client = @saved_cs_client */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,60,QUERY,intranet_db,'LOCK TABLES `notice` WRITE',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,61,QUERY,intranet_db,'/*!40000 ALTER TABLE `notice` DISABLE KEYS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,62,QUERY,intranet_db,'INSERT INTO `notice` VALUES\n(1,1,\'시스템 점검\',\'7월 20일 새벽 2시부터 시스템 점검이 진행됩니다.\',\'2026-07-17 16:27:25\')',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,63,QUERY,intranet_db,'/*!40000 ALTER TABLE `notice` ENABLE KEYS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,64,QUERY,intranet_db,'UNLOCK TABLES',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,65,QUERY,intranet_db,'/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,66,QUERY,intranet_db,'/*!40101 SET SQL_MODE=@OLD_SQL_MODE */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,67,QUERY,intranet_db,'/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,68,QUERY,intranet_db,'/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,69,QUERY,intranet_db,'/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,70,QUERY,intranet_db,'/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,71,QUERY,intranet_db,'/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,72,QUERY,intranet_db,'/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */',0
+20260721 09:48:15,78e4f88b9651,root,localhost,8,0,DISCONNECT,intranet_db,TLSv1.3,0
+20260721 09:48:26,78e4f88b9651,root,localhost,9,0,CONNECT,,TLSv1.3,0
+20260721 09:48:26,78e4f88b9651,root,localhost,9,74,QUERY,,'select @@version_comment limit 1',0
+20260721 09:48:34,78e4f88b9651,root,localhost,9,75,QUERY,,'show databases',0
+20260721 09:48:44,78e4f88b9651,root,localhost,9,76,QUERY,,'SELECT DATABASE()',0
+20260721 09:48:44,78e4f88b9651,root,localhost,9,78,QUERY,intranet_db,'show databases',0
+20260721 09:48:44,78e4f88b9651,root,localhost,9,79,QUERY,intranet_db,'show tables',0
+20260721 09:48:47,78e4f88b9651,root,localhost,9,82,QUERY,intranet_db,'show tables',0
+20260721 09:50:16,78e4f88b9651,root,localhost,9,0,DISCONNECT,intranet_db,TLSv1.3,0
