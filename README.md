@@ -10,43 +10,7 @@ AdminServer(인트라넷 앱)가 붙는 실제 DB 서버입니다. `intranet_db`
 (참고: 저장소에 있는 `docker-compose.yml`은 공식 `mariadb:11` 이미지 + 덤프 자동
 임포트 방식의 대안입니다. 아래 방식을 쓸 거면 compose는 무시하세요.)
 
-common.php는 intranet_db 접속에 실패해도 페이지를 죽이지 않고 $pdo = null로 넘어가도록 되어 있어서, DB 서버 없이 컨테이너만 띄워도 /login.php 화면은 정상 표시됩니다 (로그인 버튼을 누르면 "DB 서버에 연결할 수 없습니다" 메시지만 뜸). 단, 로그인 자체은 DB 없이는 불가능하고, 세션이 이미 로그인된 상태에서 DB가 나중에 끊기는 경우는 별도로 방어돼 있지 않습니다.
 
-(최초 서버 세팅 시, Rocky/RHEL/AlmaLinux/CentOS 계열)
-
-Rocky Linux 등 RHEL 계열은 기본적으로 Docker가 설치되어 있지 않고 podman이 기본 컨테이너 런타임입니다. docker 명령어가 podman을 흉내만 내는 상태로 빌드/실행하면 각종 에러가 나므로, 이 프로젝트를 내려받기 전에 아래 순서대로 진짜 Docker부터 설치하세요.
-
-# 1. podman이 docker 명령어를 가로채고 있다면 제거
-sudo dnf remove -y podman-docker
-
-# 2. Docker CE 공식 저장소 추가 (RHEL 계열은 centos용 저장소 사용)
-sudo dnf -y install dnf-plugins-core
-sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-
-# 3. Rocky 10 최소 설치본에 흔히 빠져있는 커널 모듈 설치 후 재부팅
-sudo dnf install -y kernel-modules-extra
-sudo reboot
-재부팅 후 재접속해서 계속 진행:
-
-# 4. Docker Engine + Compose 플러그인 설치
-sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-위 4번 명령이 Could not connect to server / baseos 관련 에러로 실패하면, 서버 네트워크에서 Rocky 공식 미러(mirrors.rockylinux.org)가 막혀있는 경우입니다. Docker 설치엔 필요 없는 저장소이니 아래처럼 빼고 설치하세요.
-
-sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-    --disablerepo=baseos --disablerepo=appstream --disablerepo=extras
-# 5. 서비스 활성화
-sudo systemctl enable --now docker
-
-# 6. 설치 확인 (Server 항목이 "Docker Engine - Community"로 나와야 정상)
-docker version
-docker compose version
-docker version에 Emulate Docker CLI using podman... 문구가 보이거나 DOCKER_HOST 환경변수가 unix:///run/podman/podman.sock을 가리키고 있다면 아직 podman이 잡고 있는 상태이니, 아래로 확인하고 원인이 되는 rc 파일에서 해당 줄을 지운 뒤 재로그인하세요.
-
-echo $DOCKER_HOST
-grep -rn "DOCKER_HOST" ~/.bashrc ~/.bash_profile ~/.profile \
-    /root/.bashrc /root/.bash_profile /root/.profile \
-    /etc/environment /etc/profile.d/ 2>/dev/null
-여기까지 확인됐으면 아래 "Docker로 실행" 단계로 넘어가세요.
 
 ```bash
 # 1. 이미지 받기
