@@ -5,7 +5,7 @@
  * 씨네나잇 웹서버 ↔ 인트라넷 서버 간 연동 설정.
  *
  * 이 웹서버는 DB에 직접 접속하지 않습니다. 회원(로그인/가입/마이페이지)과
- * 영상(목록/상세/등록) 데이터는 전부 아래 API 엔드포인트를 통해서만
+ * 영상(목록/상세/등록), 문의 데이터는 전부 아래 API 엔드포인트를 통해서만
  * 인트라넷 서버에 요청합니다. (AWS Site-to-Site VPN 터널을 통해 사설 IP로 통신)
  *
  * ⚠️ 절대 외부 저장소에 커밋하거나 웹 루트 밖으로 옮기지 마세요.
@@ -14,7 +14,7 @@
  */
 
 // 인트라넷 서버 주소 (VPN 터널을 통한 사설 IP)
-define('INTRANET_HOST', 'http://192.168.20.10');
+define('INTRANET_HOST', 'http://192.168.20.10:8001');
 
 // ----- API 엔드포인트 -----
 define('INTRANET_API_MEMBERS',       INTRANET_HOST . '/api/members.php');       // 회원 정보 조회 (마이페이지 / 관리자 가입자 조회)
@@ -22,6 +22,7 @@ define('INTRANET_API_AUTH',          INTRANET_HOST . '/api/auth.php');          
 define('INTRANET_API_JOIN',          INTRANET_HOST . '/api/join.php');          // 회원가입
 define('INTRANET_API_VIDEOS',        INTRANET_HOST . '/api/videos.php');        // 영상 목록/상세 조회 (읽기 전용)
 define('INTRANET_API_VIDEOS_UPLOAD', INTRANET_HOST . '/api/videos_upload.php'); // 영상 등록 (생성 전용 - 수정/삭제 API는 없음)
+define('INTRANET_API_INQUIRY',       INTRANET_HOST . '/api/inquiry.php');       // 문의 등록/조회 (신규)
 
 // 인트라넷 API 인증용 마스터 토큰 (인트라넷 서버 common.php의
 // INTRANET_API_MASTER_TOKEN 값과 반드시 동일해야 함)

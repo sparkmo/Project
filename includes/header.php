@@ -16,6 +16,9 @@
             <?php foreach (CATEGORIES as $key => $label): if ($key === 'general') continue; ?>
                 <a href="/list.php?category=<?= urlencode($key) ?>"><?= $label ?></a>
             <?php endforeach; ?>
+            <?php if (is_login()): ?>
+                <a href="/inquiry.php">문의하기</a>
+            <?php endif; ?>
         </nav>
         <div class="user-nav">
             <?php if (is_login()): ?>

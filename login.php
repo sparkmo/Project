@@ -35,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['user_id']  = $member['id'];
     $_SESSION['username'] = $member['username'];
     $_SESSION['nickname'] = $member['nickname'];
-    $_SESSION['grade']    = $member['grade'];
+    // 참고: ott_db.member 테이블에는 grade(등급) 컬럼이 없습니다.
+    // 회원 등급 구분 기능이 필요하면 DB 담당자에게 컬럼 추가를 요청해야 합니다.
 
     alert_redirect('로그인되었습니다.', 'index.php');
 }
