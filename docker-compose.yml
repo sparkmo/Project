@@ -1,13 +1,25 @@
 services:
   intranet:
     build: .
-    ports:
-      - "8001:80"
+    container_name: admin-server
     env_file:
       - .env
+    networks:
+      docker_bridge:
+        ipv4_address: 172.17.0.3 # 인트라넷(Admin) 서버쪽 IP
+    ports:
+      - "8001:80"        # 192.168.20.10:8001 -> 172.17.0.3:80
     restart: unless-stopped
-
-# --- DB 컨테이너 없음 ---
-# intranet_db / ott(회원 DB)는 이제 로컬 컨테이너가 아니라 별도 DB 서버
-# (Project-DBServer, docker compose 별도 실행)에 접속합니다.
-# .env 의 DB_HOST / MEMBER_DB_HOST 를 그 서버의 주소로 설정하세요.
+ 
+# docker_bridge 네트워크를 여기서 실제로 생성합니다.
+# (DBServer2 쪽 docker-compose.yml은 external: true 로 이 네트워크에 붙기만 합니다.
+#  그래서 admin-server를 먼저 켜서 네트워크가 만들어지게 해야 db-server가 정상 연결됩니다.)
+networks:
+  docker_bridge:
+    name: docker_bridge
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.0.0/24
+          gateway: 172.17.0.1
+ 
