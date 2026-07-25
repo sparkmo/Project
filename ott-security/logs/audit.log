@@ -89,3 +89,308 @@
 20260721 09:48:44,78e4f88b9651,root,localhost,9,79,QUERY,intranet_db,'show tables',0
 20260721 09:48:47,78e4f88b9651,root,localhost,9,82,QUERY,intranet_db,'show tables',0
 20260721 09:50:16,78e4f88b9651,root,localhost,9,0,DISCONNECT,intranet_db,TLSv1.3,0
+20260722 11:43:51,78e4f88b9651,root,localhost,3,0,CONNECT,,TLSv1.3,0
+20260722 11:43:51,78e4f88b9651,root,localhost,3,1,QUERY,,'select @@version_comment limit 1',0
+20260722 11:47:32,78e4f88b9651,root,localhost,3,2,QUERY,mysql,'create user \'intra_admin\'@\'localhost\' identified by *****',0
+20260722 11:47:48,78e4f88b9651,root,localhost,3,3,QUERY,mysql,'show databases',0
+20260722 11:50:23,78e4f88b9651,root,localhost,3,4,QUERY,mysql,'grant all privileges on intranet_db.* to \'intra_admin\'@\'localhost\'',0
+20260722 11:50:34,78e4f88b9651,root,localhost,3,5,QUERY,mysql,'flush privileges',0
+20260722 11:50:58,78e4f88b9651,root,localhost,3,6,QUERY,mysql,'select user, host from mysql.user',0
+20260722 11:52:29,78e4f88b9651,root,localhost,3,7,QUERY,mysql,'drop user \'root\'@\'%\'',0
+20260722 11:52:33,78e4f88b9651,root,localhost,3,8,QUERY,mysql,'select user, host from mysql.user',0
+20260722 11:53:55,78e4f88b9651,root,localhost,3,9,QUERY,mysql,'create user \'ott_admin\'@\'localhost\' on identified by *****',1064
+20260722 11:54:15,78e4f88b9651,root,localhost,3,10,QUERY,mysql,'create user \'ott_admin\'@\'localhost\' identified by *****',0
+20260722 11:55:45,78e4f88b9651,root,localhost,3,11,QUERY,mysql,'grent all privileges on ott.* to \'ott_admin\'@\'localhost\'',1064
+20260722 11:57:57,78e4f88b9651,root,localhost,3,12,QUERY,mysql,'grant all privileges on ott.* to \'ott_admin\'@\'localhost\'',0
+20260722 11:58:33,78e4f88b9651,root,localhost,3,0,DISCONNECT,,TLSv1.3,0
+20260722 12:56:40,78e4f88b9651,root,localhost,4,0,CONNECT,,TLSv1.3,0
+20260722 12:56:40,78e4f88b9651,root,localhost,4,14,QUERY,,'select @@version_comment limit 1',0
+20260722 12:56:59,78e4f88b9651,root,localhost,4,15,QUERY,,'show databases',0
+20260722 12:57:08,78e4f88b9651,root,localhost,4,16,QUERY,,'SELECT DATABASE()',0
+20260722 12:57:08,78e4f88b9651,root,localhost,4,18,QUERY,mysql,'show databases',0
+20260722 12:57:08,78e4f88b9651,root,localhost,4,19,QUERY,mysql,'show tables',0
+20260722 12:57:11,78e4f88b9651,root,localhost,4,51,QUERY,mysql,'show tables',0
+20260722 12:57:19,78e4f88b9651,root,localhost,4,52,QUERY,mysql,'desc user',0
+20260722 12:57:39,78e4f88b9651,root,localhost,4,53,QUERY,mysql,'select * from user',0
+20260722 12:57:52,78e4f88b9651,root,localhost,4,54,QUERY,mysql,'desc user',0
+20260722 12:58:11,78e4f88b9651,root,localhost,4,55,QUERY,mysql,'select user from user',0
+20260722 13:05:07,78e4f88b9651,root,localhost,4,56,QUERY,mysql,'create user \'intra_user\'@\'%\' identified by *****',0
+20260722 13:06:30,78e4f88b9651,root,localhost,4,57,QUERY,mysql,'show databases',0
+20260722 13:18:52,78e4f88b9651,intra_user,172.17.0.3:49794,5,0,CONNECT,,TLSv1.3,0
+20260722 13:18:52,78e4f88b9651,intra_user,172.17.0.3:49794,5,58,QUERY,,'select @@version_comment limit 1',0
+20260722 13:19:56,78e4f88b9651,root,localhost,4,59,QUERY,mysql,'SELECT DATABASE()',0
+20260722 13:20:04,78e4f88b9651,root,localhost,4,61,QUERY,mysql,'show databases',0
+20260722 13:20:12,78e4f88b9651,root,localhost,4,62,QUERY,mysql,'SELECT DATABASE()',0
+20260722 13:20:12,78e4f88b9651,root,localhost,4,64,QUERY,intranet_db,'show databases',0
+20260722 13:20:12,78e4f88b9651,root,localhost,4,65,QUERY,intranet_db,'show tables',0
+20260722 13:20:15,78e4f88b9651,root,localhost,4,68,QUERY,intranet_db,'show tables',0
+20260722 13:20:33,78e4f88b9651,root,localhost,4,69,QUERY,intranet_db,'select * from employee',0
+20260722 13:21:34,78e4f88b9651,intra_user,172.17.0.3:49794,5,0,DISCONNECT,,TLSv1.3,0
+20260722 13:22:04,78e4f88b9651,root,localhost,4,0,DISCONNECT,intranet_db,TLSv1.3,0
+20260722 13:40:05,78e4f88b9651,root,localhost,6,0,CONNECT,,TLSv1.3,0
+20260722 13:40:05,78e4f88b9651,root,localhost,6,72,QUERY,,'select @@version_comment limit 1',0
+20260722 13:40:16,78e4f88b9651,root,localhost,6,73,QUERY,,'SELECT DATABASE()',0
+20260722 13:40:16,78e4f88b9651,root,localhost,6,75,QUERY,mysql,'show databases',0
+20260722 13:40:16,78e4f88b9651,root,localhost,6,76,QUERY,mysql,'show tables',0
+20260722 13:40:41,78e4f88b9651,root,localhost,6,108,QUERY,mysql,'desc user',0
+20260722 13:41:06,78e4f88b9651,root,localhost,6,109,QUERY,mysql,'select user, host from user',0
+20260722 13:43:40,78e4f88b9651,root,localhost,6,110,QUERY,mysql,'rename user \'intra_admin\'@\'localhost\' to \'intra_admin\'@\'%\'',0
+20260722 13:43:52,78e4f88b9651,root,localhost,6,111,QUERY,mysql,'select user, host from user',0
+20260722 13:48:36,78e4f88b9651,root,localhost,6,112,QUERY,mysql,'flush privileges',0
+20260722 13:56:01,78e4f88b9651,root,localhost,6,0,DISCONNECT,mysql,TLSv1.3,0
+20260722 14:07:36,78e4f88b9651,intra_admin,172.17.0.3:40392,3,0,CONNECT,,TLSv1.3,0
+20260722 14:07:36,78e4f88b9651,intra_admin,172.17.0.3:40392,3,1,QUERY,,'select @@version_comment limit 1',0
+20260722 14:07:40,78e4f88b9651,intra_admin,172.17.0.3:40392,3,0,DISCONNECT,,TLSv1.3,0
+20260722 14:09:35,78e4f88b9651,root,localhost,4,0,CONNECT,,TLSv1.3,0
+20260722 14:09:35,78e4f88b9651,root,localhost,4,3,QUERY,,'select @@version_comment limit 1',0
+20260722 14:11:01,78e4f88b9651,root,localhost,4,4,QUERY,mysql,'rename user \'ott_admin\'@\'localhost\' to \'ott_admin\'@\'%\'',0
+20260722 14:11:14,78e4f88b9651,root,localhost,4,5,QUERY,mysql,'SELECT User, Host\nFROM mysql.user\nWHERE User IN (\'intra_admin\', \'ott_admin\')',0
+20260722 14:17:26,78e4f88b9651,intra_admin,172.17.0.3:47784,5,0,FAILED_CONNECT,,,1045
+20260722 14:17:26,78e4f88b9651,intra_admin,172.17.0.3:47784,5,0,DISCONNECT,,,0
+20260722 14:27:27,78e4f88b9651,root,localhost,4,0,DISCONNECT,,TLSv1.3,0
+20260722 14:37:58,78e4f88b9651,intra_admin,172.17.0.3:43052,6,0,CONNECT,intranet_db,,0
+20260722 14:37:58,78e4f88b9651,intra_admin,172.17.0.3:43052,6,8,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, password, name, LOWER(role) AS grade\n         FROM employee WHERE login_id = ?',0
+20260722 14:37:58,78e4f88b9651,intra_admin,172.17.0.3:43052,6,10,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',1146
+20260722 14:37:58,78e4f88b9651,intra_admin,172.17.0.3:43052,6,0,DISCONNECT,intranet_db,,0
+20260722 14:56:54,78e4f88b9651,root,localhost,7,0,CONNECT,,TLSv1.3,0
+20260722 14:56:54,78e4f88b9651,root,localhost,7,12,QUERY,,'select @@version_comment limit 1',0
+20260722 14:57:25,78e4f88b9651,root,localhost,7,13,QUERY,,'CREATE TABLE IF NOT EXISTS access_logs (\n    id         INT AUTO_INCREMENT PRIMARY KEY,\n    user_id    BIGINT NULL,\n    ip         VARCHAR(45) DEFAULT \'\',\n    action     VARCHAR(50) NOT NULL,\n    target     VARCHAR(255) DEFAULT \'-\',\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    FOREIGN KEY (user_id) REFERENCES employee(employee_id)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4',1046
+20260722 14:57:56,78e4f88b9651,root,localhost,7,14,QUERY,,'SELECT DATABASE()',0
+20260722 14:57:56,78e4f88b9651,root,localhost,7,16,QUERY,intranet_db,'show databases',0
+20260722 14:57:56,78e4f88b9651,root,localhost,7,17,QUERY,intranet_db,'show tables',0
+20260722 14:57:59,78e4f88b9651,root,localhost,7,20,QUERY,intranet_db,'CREATE TABLE IF NOT EXISTS access_logs (\n    id         INT AUTO_INCREMENT PRIMARY KEY,\n    user_id    BIGINT NULL,\n    ip         VARCHAR(45) DEFAULT \'\',\n    action     VARCHAR(50) NOT NULL,\n    target     VARCHAR(255) DEFAULT \'-\',\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    FOREIGN KEY (user_id) REFERENCES employee(employee_id)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4',0
+20260722 14:58:11,78e4f88b9651,intra_admin,172.17.0.3:46488,8,0,CONNECT,intranet_db,,0
+20260722 14:58:11,78e4f88b9651,intra_admin,172.17.0.3:46488,8,0,DISCONNECT,intranet_db,,0
+20260722 14:58:11,78e4f88b9651,intra_admin,172.17.0.3:46494,9,0,CONNECT,intranet_db,,0
+20260722 14:58:11,78e4f88b9651,intra_admin,172.17.0.3:46494,9,22,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',1054
+20260722 14:58:11,78e4f88b9651,intra_admin,172.17.0.3:46494,9,0,DISCONNECT,intranet_db,,0
+20260722 14:58:12,78e4f88b9651,intra_admin,172.17.0.3:46496,10,0,CONNECT,intranet_db,,0
+20260722 14:58:12,78e4f88b9651,intra_admin,172.17.0.3:46496,10,24,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',1054
+20260722 14:58:12,78e4f88b9651,intra_admin,172.17.0.3:46496,10,0,DISCONNECT,intranet_db,,0
+20260722 15:00:25,78e4f88b9651,root,localhost,7,26,QUERY,intranet_db,'SELECT DATABASE()',0
+20260722 15:00:31,78e4f88b9651,root,localhost,7,28,QUERY,intranet_db,'ALTER TABLE employee\nADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',0
+20260722 15:00:43,78e4f88b9651,intra_admin,172.17.0.3:60030,11,0,CONNECT,intranet_db,,0
+20260722 15:00:43,78e4f88b9651,intra_admin,172.17.0.3:60030,11,30,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:00:43,78e4f88b9651,intra_admin,172.17.0.3:60030,11,33,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC LIMIT 5',0
+20260722 15:00:43,78e4f88b9651,ott_admin,172.17.0.3:60040,12,0,CONNECT,ott,,0
+20260722 15:00:43,78e4f88b9651,ott_admin,172.17.0.3:60040,12,35,QUERY,ott,'SELECT COUNT(*) FROM members',1146
+20260722 15:00:43,78e4f88b9651,intra_admin,172.17.0.3:60030,11,37,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:00:43,78e4f88b9651,intra_admin,172.17.0.3:60030,11,0,DISCONNECT,intranet_db,,0
+20260722 15:00:43,78e4f88b9651,ott_admin,172.17.0.3:60040,12,0,DISCONNECT,ott,,0
+20260722 15:03:28,78e4f88b9651,intra_admin,172.17.0.3:39980,13,0,CONNECT,intranet_db,,0
+20260722 15:03:28,78e4f88b9651,intra_admin,172.17.0.3:39980,13,42,QUERY,intranet_db,'SELECT COUNT(*) FROM notice',0
+20260722 15:03:28,78e4f88b9651,intra_admin,172.17.0.3:39980,13,45,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC\n     LIMIT ? OFFSET ?',0
+20260722 15:03:28,78e4f88b9651,intra_admin,172.17.0.3:39980,13,47,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:28,78e4f88b9651,intra_admin,172.17.0.3:39980,13,0,DISCONNECT,intranet_db,,0
+20260722 15:03:29,78e4f88b9651,intra_admin,172.17.0.3:39994,14,0,CONNECT,intranet_db,,0
+20260722 15:03:29,78e4f88b9651,intra_admin,172.17.0.3:39994,14,0,DISCONNECT,intranet_db,,0
+20260722 15:03:29,78e4f88b9651,intra_admin,172.17.0.3:40006,15,0,CONNECT,intranet_db,,0
+20260722 15:03:29,78e4f88b9651,intra_admin,172.17.0.3:40006,15,53,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:29,78e4f88b9651,intra_admin,172.17.0.3:40006,15,56,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:29,78e4f88b9651,intra_admin,172.17.0.3:40006,15,0,DISCONNECT,intranet_db,,0
+20260722 15:03:30,78e4f88b9651,intra_admin,172.17.0.3:40010,16,0,CONNECT,intranet_db,,0
+20260722 15:03:30,78e4f88b9651,intra_admin,172.17.0.3:40010,16,60,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:30,78e4f88b9651,intra_admin,172.17.0.3:40010,16,63,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n            LOWER(role) AS grade, email, created_at\n     FROM employee ORDER BY employee_id',0
+20260722 15:03:30,78e4f88b9651,intra_admin,172.17.0.3:40010,16,66,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:30,78e4f88b9651,intra_admin,172.17.0.3:40010,16,0,DISCONNECT,intranet_db,,0
+20260722 15:03:31,78e4f88b9651,intra_admin,172.17.0.3:40020,17,0,CONNECT,intranet_db,,0
+20260722 15:03:31,78e4f88b9651,intra_admin,172.17.0.3:40020,17,70,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:31,78e4f88b9651,ott_admin,172.17.0.3:40032,18,0,CONNECT,ott,,0
+20260722 15:03:31,78e4f88b9651,ott_admin,172.17.0.3:40032,18,72,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:31,78e4f88b9651,intra_admin,172.17.0.3:40020,17,74,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:31,78e4f88b9651,intra_admin,172.17.0.3:40020,17,77,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:31,78e4f88b9651,intra_admin,172.17.0.3:40020,17,0,DISCONNECT,intranet_db,,0
+20260722 15:03:31,78e4f88b9651,ott_admin,172.17.0.3:40032,18,0,DISCONNECT,ott,,0
+20260722 15:03:32,78e4f88b9651,intra_admin,172.17.0.3:40048,19,0,CONNECT,intranet_db,,0
+20260722 15:03:32,78e4f88b9651,intra_admin,172.17.0.3:40048,19,82,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:32,78e4f88b9651,ott_admin,172.17.0.3:40064,20,0,CONNECT,ott,,0
+20260722 15:03:32,78e4f88b9651,ott_admin,172.17.0.3:40064,20,84,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:32,78e4f88b9651,intra_admin,172.17.0.3:40048,19,86,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:32,78e4f88b9651,intra_admin,172.17.0.3:40048,19,0,DISCONNECT,intranet_db,,0
+20260722 15:03:32,78e4f88b9651,ott_admin,172.17.0.3:40064,20,0,DISCONNECT,ott,,0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44610,21,0,CONNECT,intranet_db,,0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44610,21,91,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44612,22,0,CONNECT,ott,,0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44612,22,93,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44610,21,95,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44610,21,98,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44610,21,0,DISCONNECT,intranet_db,,0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44612,22,0,DISCONNECT,ott,,0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44626,23,0,CONNECT,intranet_db,,0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44626,23,103,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44638,24,0,CONNECT,ott,,0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44638,24,105,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44626,23,107,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44626,23,0,DISCONNECT,intranet_db,,0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44638,24,0,DISCONNECT,ott,,0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44652,25,0,CONNECT,intranet_db,,0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44652,25,112,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44662,26,0,CONNECT,ott,,0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44662,26,114,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44652,25,116,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44652,25,119,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:37,78e4f88b9651,intra_admin,172.17.0.3:44652,25,0,DISCONNECT,intranet_db,,0
+20260722 15:03:37,78e4f88b9651,ott_admin,172.17.0.3:44662,26,0,DISCONNECT,ott,,0
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44668,27,0,CONNECT,intranet_db,,0
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44668,27,124,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:38,78e4f88b9651,ott_admin,172.17.0.3:44676,28,0,CONNECT,ott,,0
+20260722 15:03:38,78e4f88b9651,ott_admin,172.17.0.3:44676,28,126,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44668,27,128,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44668,27,0,DISCONNECT,intranet_db,,0
+20260722 15:03:38,78e4f88b9651,ott_admin,172.17.0.3:44676,28,0,DISCONNECT,ott,,0
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44684,29,0,CONNECT,intranet_db,,0
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44684,29,133,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:38,78e4f88b9651,ott_admin,172.17.0.3:44688,30,0,CONNECT,ott,,0
+20260722 15:03:38,78e4f88b9651,ott_admin,172.17.0.3:44688,30,135,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44684,29,137,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:38,78e4f88b9651,intra_admin,172.17.0.3:44684,29,0,DISCONNECT,intranet_db,,0
+20260722 15:03:38,78e4f88b9651,ott_admin,172.17.0.3:44688,30,0,DISCONNECT,ott,,0
+20260722 15:03:39,78e4f88b9651,intra_admin,172.17.0.3:44700,31,0,CONNECT,intranet_db,,0
+20260722 15:03:39,78e4f88b9651,intra_admin,172.17.0.3:44700,31,142,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:39,78e4f88b9651,ott_admin,172.17.0.3:44716,32,0,CONNECT,ott,,0
+20260722 15:03:39,78e4f88b9651,ott_admin,172.17.0.3:44716,32,144,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:39,78e4f88b9651,intra_admin,172.17.0.3:44700,31,146,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:39,78e4f88b9651,intra_admin,172.17.0.3:44700,31,149,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:39,78e4f88b9651,intra_admin,172.17.0.3:44700,31,0,DISCONNECT,intranet_db,,0
+20260722 15:03:39,78e4f88b9651,ott_admin,172.17.0.3:44716,32,0,DISCONNECT,ott,,0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44724,33,0,CONNECT,intranet_db,,0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44724,33,154,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:40,78e4f88b9651,ott_admin,172.17.0.3:44738,34,0,CONNECT,ott,,0
+20260722 15:03:40,78e4f88b9651,ott_admin,172.17.0.3:44738,34,156,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:40,78e4f88b9651,ott_admin,172.17.0.3:44738,34,0,DISCONNECT,ott,,0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44724,33,158,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44724,33,0,DISCONNECT,intranet_db,,0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44740,35,0,CONNECT,intranet_db,,0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44740,35,163,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:40,78e4f88b9651,ott_admin,172.17.0.3:44746,36,0,CONNECT,ott,,0
+20260722 15:03:40,78e4f88b9651,ott_admin,172.17.0.3:44746,36,165,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44740,35,167,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44740,35,170,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:40,78e4f88b9651,intra_admin,172.17.0.3:44740,35,0,DISCONNECT,intranet_db,,0
+20260722 15:03:40,78e4f88b9651,ott_admin,172.17.0.3:44746,36,0,DISCONNECT,ott,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44754,37,0,CONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44754,37,175,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,ott_admin,172.17.0.3:44762,38,0,CONNECT,ott,,0
+20260722 15:03:41,78e4f88b9651,ott_admin,172.17.0.3:44762,38,177,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44754,37,179,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44754,37,0,DISCONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,ott_admin,172.17.0.3:44762,38,0,DISCONNECT,ott,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44776,39,0,CONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44776,39,184,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,ott_admin,172.17.0.3:44782,40,0,CONNECT,ott,,0
+20260722 15:03:41,78e4f88b9651,ott_admin,172.17.0.3:44782,40,186,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44776,39,188,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44776,39,191,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44776,39,0,DISCONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,ott_admin,172.17.0.3:44782,40,0,DISCONNECT,ott,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44796,41,0,CONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44796,41,196,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44796,41,199,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n            LOWER(role) AS grade, email, created_at\n     FROM employee ORDER BY employee_id',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44796,41,202,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44796,41,0,DISCONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44808,42,0,CONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44808,42,0,DISCONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44818,43,0,CONNECT,intranet_db,,0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44818,43,207,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44818,43,210,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:41,78e4f88b9651,intra_admin,172.17.0.3:44818,43,0,DISCONNECT,intranet_db,,0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44824,44,0,CONNECT,intranet_db,,0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44824,44,214,QUERY,intranet_db,'SELECT COUNT(*) FROM notice',0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44824,44,217,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC\n     LIMIT ? OFFSET ?',0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44824,44,219,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44824,44,0,DISCONNECT,intranet_db,,0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44828,45,0,CONNECT,intranet_db,,0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44828,45,224,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44828,45,227,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n            LOWER(role) AS grade, email, created_at\n     FROM employee ORDER BY employee_id',0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44828,45,230,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44828,45,0,DISCONNECT,intranet_db,,0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44838,46,0,CONNECT,intranet_db,,0
+20260722 15:03:42,78e4f88b9651,intra_admin,172.17.0.3:44838,46,0,DISCONNECT,intranet_db,,0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44852,47,0,CONNECT,intranet_db,,0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44852,47,235,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44852,47,238,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44852,47,0,DISCONNECT,intranet_db,,0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44864,48,0,CONNECT,intranet_db,,0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44864,48,242,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44864,48,245,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n            LOWER(role) AS grade, email, created_at\n     FROM employee ORDER BY employee_id',0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44864,48,248,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:43,78e4f88b9651,intra_admin,172.17.0.3:44864,48,0,DISCONNECT,intranet_db,,0
+20260722 15:03:44,78e4f88b9651,intra_admin,172.17.0.3:44876,49,0,CONNECT,intranet_db,,0
+20260722 15:03:44,78e4f88b9651,intra_admin,172.17.0.3:44876,49,252,QUERY,intranet_db,'SELECT COUNT(*) FROM notice',0
+20260722 15:03:44,78e4f88b9651,intra_admin,172.17.0.3:44876,49,255,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC\n     LIMIT ? OFFSET ?',0
+20260722 15:03:44,78e4f88b9651,intra_admin,172.17.0.3:44876,49,257,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:44,78e4f88b9651,intra_admin,172.17.0.3:44876,49,0,DISCONNECT,intranet_db,,0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44884,50,0,CONNECT,intranet_db,,0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44884,50,262,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44884,50,265,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC LIMIT 5',0
+20260722 15:03:45,78e4f88b9651,ott_admin,172.17.0.3:44886,51,0,CONNECT,ott,,0
+20260722 15:03:45,78e4f88b9651,ott_admin,172.17.0.3:44886,51,267,QUERY,ott,'SELECT COUNT(*) FROM members',1146
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44884,50,269,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44884,50,0,DISCONNECT,intranet_db,,0
+20260722 15:03:45,78e4f88b9651,ott_admin,172.17.0.3:44886,51,0,DISCONNECT,ott,,0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44898,52,0,CONNECT,intranet_db,,0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44898,52,274,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44898,52,277,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC LIMIT 5',0
+20260722 15:03:45,78e4f88b9651,ott_admin,172.17.0.3:44900,53,0,CONNECT,ott,,0
+20260722 15:03:45,78e4f88b9651,ott_admin,172.17.0.3:44900,53,279,QUERY,ott,'SELECT COUNT(*) FROM members',1146
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44898,52,281,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44898,52,0,DISCONNECT,intranet_db,,0
+20260722 15:03:45,78e4f88b9651,ott_admin,172.17.0.3:44900,53,0,DISCONNECT,ott,,0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44916,54,0,CONNECT,intranet_db,,0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44916,54,286,QUERY,intranet_db,'SELECT COUNT(*) FROM notice',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44916,54,289,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC\n     LIMIT ? OFFSET ?',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44916,54,291,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:45,78e4f88b9651,intra_admin,172.17.0.3:44916,54,0,DISCONNECT,intranet_db,,0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44924,55,0,CONNECT,intranet_db,,0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44924,55,296,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44924,55,299,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n            LOWER(role) AS grade, email, created_at\n     FROM employee ORDER BY employee_id',0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44924,55,302,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44924,55,0,DISCONNECT,intranet_db,,0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44928,56,0,CONNECT,intranet_db,,0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44928,56,306,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:46,78e4f88b9651,ott_admin,172.17.0.3:44936,57,0,CONNECT,ott,,0
+20260722 15:03:46,78e4f88b9651,ott_admin,172.17.0.3:44936,57,308,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44928,56,310,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44928,56,313,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:46,78e4f88b9651,intra_admin,172.17.0.3:44928,56,0,DISCONNECT,intranet_db,,0
+20260722 15:03:46,78e4f88b9651,ott_admin,172.17.0.3:44936,57,0,DISCONNECT,ott,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48698,58,0,CONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48698,58,318,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:47,78e4f88b9651,ott_admin,172.17.0.3:48710,59,0,CONNECT,ott,,0
+20260722 15:03:47,78e4f88b9651,ott_admin,172.17.0.3:48710,59,320,QUERY,ott,'SELECT v.*, m.nickname, m.username AS writer_username\n         FROM videos v JOIN members m ON m.id = v.writer_id\n         ORDER BY v.reg_date DESC',1146
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48698,58,322,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48698,58,0,DISCONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,ott_admin,172.17.0.3:48710,59,0,DISCONNECT,ott,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48720,60,0,CONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48720,60,327,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:47,78e4f88b9651,ott_admin,172.17.0.3:48728,61,0,CONNECT,ott,,0
+20260722 15:03:47,78e4f88b9651,ott_admin,172.17.0.3:48728,61,329,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48720,60,331,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48720,60,334,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48720,60,0,DISCONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,ott_admin,172.17.0.3:48728,61,0,DISCONNECT,ott,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48732,62,0,CONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48732,62,0,DISCONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48734,63,0,CONNECT,intranet_db,,0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48734,63,340,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48734,63,343,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:47,78e4f88b9651,intra_admin,172.17.0.3:48734,63,0,DISCONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48744,64,0,CONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48744,64,347,QUERY,intranet_db,'SELECT COUNT(*) FROM notice',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48744,64,350,QUERY,intranet_db,'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name\n     FROM notice n JOIN employee e ON e.employee_id = n.employee_id\n     ORDER BY n.created_at DESC\n     LIMIT ? OFFSET ?',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48744,64,352,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48744,64,0,DISCONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48748,65,0,CONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48748,65,357,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48748,65,360,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n            LOWER(role) AS grade, email, created_at\n     FROM employee ORDER BY employee_id',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48748,65,363,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48748,65,0,DISCONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48764,66,0,CONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48764,66,367,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:48,78e4f88b9651,ott_admin,172.17.0.3:48776,67,0,CONNECT,ott,,0
+20260722 15:03:48,78e4f88b9651,ott_admin,172.17.0.3:48776,67,369,QUERY,ott,'SELECT id, username, nickname, email, phone, grade, reg_date, last_login\n         FROM members\n         ORDER BY id DESC',1146
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48764,66,371,QUERY,intranet_db,'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48764,66,374,QUERY,intranet_db,'SELECT employee_id AS id, login_id AS username, name, department AS dept,\n                LOWER(role) AS grade, email, created_at\n         FROM employee WHERE employee_id = ?',0
+20260722 15:03:48,78e4f88b9651,intra_admin,172.17.0.3:48764,66,0,DISCONNECT,intranet_db,,0
+20260722 15:03:48,78e4f88b9651,ott_admin,172.17.0.3:48776,67,0,DISCONNECT,ott,,0
+20260725 16:50:30,78e4f88b9651,root,localhost,7,0,DISCONNECT,intranet_db,TLSv1.3,0
