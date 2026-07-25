@@ -14,7 +14,7 @@
  */
 
 // 인트라넷 서버 주소 (VPN 터널을 통한 사설 IP)
-define('INTRANET_HOST', 'http://192.168.20.10');
+define('INTRANET_HOST', 'http://192.168.20.10:8080');
 
 // ----- API 엔드포인트 -----
 define('INTRANET_API_MEMBERS',       INTRANET_HOST . '/api/members.php');       // 회원 정보 조회 (마이페이지 / 관리자 가입자 조회)
