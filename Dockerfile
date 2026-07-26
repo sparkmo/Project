@@ -1,5 +1,10 @@
 FROM php:8.2-apache
 
+RUN apt-get update && apt-get install -y \
+    libcurl4-openssl-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
 # 코드에서 실제로 쓰는 확장자는 curl 뿐입니다 (common.php의 intranet_api_get/post).
 # DB(mysqli/PDO)는 직접 붙지 않으므로 관련 확장은 필요 없습니다.
 RUN docker-php-ext-install curl
