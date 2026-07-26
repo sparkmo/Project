@@ -2,9 +2,11 @@
 /**
  * admin/members.php
  * 씨네나잇 OTT 서비스 가입 회원(고객) 정보 조회 화면.
- * member_db(회원DB, 3308)는 인트라넷 서버에서만 접근 가능하도록 격리되어 있으므로,
+ * ott_db는 인트라넷 서버에서만 접근 가능하도록 격리되어 있으므로,
  * 이 페이지가 사실상 회원 개인정보에 접근할 수 있는 유일한 경로입니다.
  * (관리자 등급만 접근 가능 - require_admin())
+ *
+ * ott_db.member 스키마에는 phone/grade/last_login 컬럼이 없습니다.
  */
 require_once __DIR__ . '/../common.php';
 require_once __DIR__ . '/../auth.php';
@@ -18,9 +20,9 @@ $members = [];
 try {
     $pdo_member = get_member_pdo();
     $stmt = $pdo_member->query(
-        'SELECT id, username, nickname, email, phone, grade, reg_date, last_login
-         FROM members
-         ORDER BY id DESC'
+        'SELECT member_id, login_id, nickname, email, created_at
+         FROM member
+         ORDER BY member_id DESC'
     );
     $members = $stmt->fetchAll();
 } catch (PDOException $e) {
@@ -55,23 +57,17 @@ require __DIR__ . '/../includes/header.php';
                 <th>아이디</th>
                 <th>닉네임</th>
                 <th>이메일</th>
-                <th>연락처</th>
-                <th style="width:80px;">등급</th>
                 <th style="width:160px;">가입일</th>
-                <th style="width:160px;">최근 로그인</th>
             </tr>
         </thead>
         <tbody>
         <?php foreach ($members as $m): ?>
             <tr>
-                <td><?= (int)$m['id'] ?></td>
-                <td><?= htmlspecialchars($m['username']) ?></td>
+                <td><?= (int)$m['member_id'] ?></td>
+                <td><?= htmlspecialchars($m['login_id']) ?></td>
                 <td><?= htmlspecialchars($m['nickname']) ?></td>
                 <td><?= htmlspecialchars($m['email']) ?></td>
-                <td><?= htmlspecialchars($m['phone'] ?? '-') ?></td>
-                <td><span class="badge badge-<?= $m['grade'] ?>"><?= $m['grade'] === 'admin' ? '관리자' : '일반' ?></span></td>
-                <td><?= htmlspecialchars(format_datetime($m['reg_date'])) ?></td>
-                <td><?= $m['last_login'] ? htmlspecialchars(format_datetime($m['last_login'])) : '-' ?></td>
+                <td><?= htmlspecialchars(format_datetime($m['created_at'])) ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
