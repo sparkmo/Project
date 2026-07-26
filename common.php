@@ -123,3 +123,43 @@ function format_datetime($datetime) {
     if ($diff < 86400) return floor($diff / 3600) . '시간 전';
     return date('Y-m-d H:i', $ts);
 }
+
+
+/**
+ * 관리자/시스템 행위 로그 기록.
+ * intranet_db 안에 access_log 테이블이 없으면 자동으로 만들어서 기록한다.
+ *
+ * @param PDO|null   $pdo        intranet_db 연결 (common.php 상단의 $pdo)
+ * @param int|null   $actor_id   행위자(직원) ID. 시스템/미인증 요청이면 null
+ * @param string     $action     행위 종류 (예: 'api_auth_login_ok', 'admin_delete_video')
+ * @param string     $detail     부가 정보 (예: 'login_id=tester')
+ */
+function log_action(?PDO $pdo, ?int $actor_id, string $action, string $detail = ''): void {
+    if ($pdo === null) {
+        // intranet_db 연결 자체가 안 되어 있으면 로그도 못 남기지만,
+        // 이것 때문에 페이지 전체가 죽으면 안 되므로 조용히 리턴한다.
+        error_log("[log_action skipped: no DB] action={$action} detail={$detail}");
+        return;
+    }
+ 
+    try {
+        $pdo->exec(
+            "CREATE TABLE IF NOT EXISTS access_log (
+                log_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+                actor_id   BIGINT NULL,
+                action     VARCHAR(100) NOT NULL,
+                detail     TEXT NULL,
+                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+        );
+ 
+        $stmt = $pdo->prepare(
+            'INSERT INTO access_log (actor_id, action, detail) VALUES (?, ?, ?)'
+        );
+        $stmt->execute([$actor_id, $action, $detail]);
+    } catch (PDOException $e) {
+        // 로그 기록 실패가 실제 기능(로그인/조회 등)을 막으면 안 되므로 예외를 삼킨다.
+        error_log('log_action 기록 실패: ' . $e->getMessage());
+    }
+}
+ 
