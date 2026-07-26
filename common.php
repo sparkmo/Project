@@ -124,42 +124,34 @@ function format_datetime($datetime) {
     return date('Y-m-d H:i', $ts);
 }
 
-
 /**
  * 관리자/시스템 행위 로그 기록.
- * intranet_db 안에 access_log 테이블이 없으면 자동으로 만들어서 기록한다.
+ * DBServer2의 03-adminserver-app-support.sql이 미리 만들어둔
+ * intranet_db.access_logs 테이블에 기록한다 (테이블은 이미 존재 - 새로 안 만듦).
  *
  * @param PDO|null   $pdo        intranet_db 연결 (common.php 상단의 $pdo)
- * @param int|null   $actor_id   행위자(직원) ID. 시스템/미인증 요청이면 null
+ * @param int|null   $actor_id   행위자(직원) ID. employee.employee_id를 FK로 참조하므로
+ *                                존재하지 않는 employee_id면 NULL로 넘겨야 함.
  * @param string     $action     행위 종류 (예: 'api_auth_login_ok', 'admin_delete_video')
- * @param string     $detail     부가 정보 (예: 'login_id=tester')
+ * @param string     $detail     부가 정보 (예: 'login_id=tester') - target 컬럼에 저장됨
  */
 function log_action(?PDO $pdo, ?int $actor_id, string $action, string $detail = ''): void {
     if ($pdo === null) {
-        // intranet_db 연결 자체가 안 되어 있으면 로그도 못 남기지만,
-        // 이것 때문에 페이지 전체가 죽으면 안 되므로 조용히 리턴한다.
         error_log("[log_action skipped: no DB] action={$action} detail={$detail}");
         return;
     }
- 
+
     try {
-        $pdo->exec(
-            "CREATE TABLE IF NOT EXISTS access_log (
-                log_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
-                actor_id   BIGINT NULL,
-                action     VARCHAR(100) NOT NULL,
-                detail     TEXT NULL,
-                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
-        );
- 
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+
         $stmt = $pdo->prepare(
-            'INSERT INTO access_log (actor_id, action, detail) VALUES (?, ?, ?)'
+            'INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)'
         );
-        $stmt->execute([$actor_id, $action, $detail]);
+        $stmt->execute([$actor_id, $ip, $action, $detail !== '' ? $detail : '-']);
     } catch (PDOException $e) {
-        // 로그 기록 실패가 실제 기능(로그인/조회 등)을 막으면 안 되므로 예외를 삼킨다.
+        // FK 제약(employee_id가 실제로 없는 값) 등으로 실패해도 페이지 자체는 죽으면 안 됨
         error_log('log_action 기록 실패: ' . $e->getMessage());
     }
 }
- 
+
+
