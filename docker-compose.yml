@@ -19,7 +19,7 @@ services:
       - db-data:/var/lib/mysql
     networks:
       docker_bridge:
-        ipv4_address: 172.17.0.2 ## DB서버 쪽 IP
+        ipv4_address: 172.20.0.2 ## DB서버 쪽 IP
     restart: unless-stopped
  
 networks:
