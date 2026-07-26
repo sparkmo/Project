@@ -90,9 +90,4 @@ function logout() {
     session_destroy();
 }
 
-/** 활동 로그 기록 */
-function log_action(?PDO $pdo, ?int $user_id, string $action, string $target = '-') {
-    if ($pdo === null) return; // DB 없으면 로그도 그냥 건너뜀
-    $stmt = $pdo->prepare('INSERT INTO access_logs (user_id, ip, action, target) VALUES (?, ?, ?, ?)');
-    $stmt->execute([$user_id, $_SERVER['REMOTE_ADDR'] ?? '-', $action, $target]);
-}
+
