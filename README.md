@@ -75,24 +75,11 @@ grep -rn "DOCKER_HOST" ~/.bashrc ~/.bash_profile ~/.profile \
 
 
 ```bash
-# 1. 이미지 받기
-docker pull chaning1004/ott_db:v2
-
-# 2. 컨테이너 실행
-docker run -itd \
-  --name ott_db \
-  -e MARIADB_ROOT_PASSWORD='zhfldk26#' \
-  -e MARIADB_DATABASE=ott \
-  -v ott-db-data:/var/lib/mysql \
-  -v /docker/ott-security/conf/audit.cnf:/etc/mysql/conf.d/audit.cnf:ro \
-  -v /docker/ott-security/logs:/var/log/mariadb \
-  chaning1004/ott_db:v2
-
 # 위에서 안될경우 밑에것으로 실행
-# 2. 빌드 + 백그라운드 실행
+# 1. 빌드 + 백그라운드 실행
 sudo docker compose up --build -d
 
-# 4. 상태 확인
+# 2. 상태 확인
 docker compose ps
 docker compose logs -f intranet
 ```
