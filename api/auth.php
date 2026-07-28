@@ -37,7 +37,7 @@ try {
     $pdo_member = get_member_pdo();
 
     $stmt = $pdo_member->prepare(
-        'SELECT member_id, login_id, password, nickname, email, created_at
+        'SELECT member_id, login_id, password, nickname, email, role, created_at
          FROM member WHERE login_id = ?'
     );
     $stmt->execute([$login_id]);
