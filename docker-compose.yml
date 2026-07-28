@@ -8,7 +8,7 @@ services:
       docker_bridge:
         ipv4_address: 172.16.0.3 # 인트라넷(Admin) 서버쪽 IP
     ports:
-      - "8001:80"        # 192.168.20.10[인트라넷과 db에 도커를 돌리는 같은 vmd에 도커2개를 돌려야함 ip]:8001 -> 172.16.0.3:80
+      - "8001:80"        # 192.168.20.10[인트라넷과 db에 도커를 돌리는 ip 같은 vmd에 도커2개를 돌려야함]:8001 -> 172.16.0.3:80
     restart: unless-stopped
  
 # docker_bridge 네트워크를 여기서 실제로 생성합니다.
