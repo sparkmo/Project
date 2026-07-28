@@ -59,6 +59,7 @@ try {
         'username'   => $member['login_id'],
         'nickname'   => $member['nickname'],
         'email'      => $member['email'],
+        'role'       => $member['role'],        // 추가
         'created_at' => $member['created_at'],
     ];
 
