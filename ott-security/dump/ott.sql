@@ -58,12 +58,13 @@ INSERT INTO member (login_id, password, nickname, email, role) VALUES
 --UPDATE member SET role='admin' WHERE login_id='기존_아이디';
  
 -- 더미 영상 (WebServer의 CATEGORIES 키: general/movie/drama/ent/anime 와 맞춰둠)
-INSERT INTO video (title, description, thumbnail, category) VALUES
-('심연의 도시',       '느와르풍 스릴러 영화.',              '/uploads/no-thumb.png', 'movie'),
-('우리 집 이야기',    '가족 드라마 1화 파일럿.',            '/uploads/no-thumb.png', 'drama'),
-('웃음 폭탄 토크쇼',  '게스트와 함께하는 예능 토크쇼.',      '/uploads/no-thumb.png', 'ent'),
-('별빛 소년단',       '판타지 배경 애니메이션 1화.',        '/uploads/no-thumb.png', 'anime'),
-('오늘의 브이로그',   '일상 브이로그 콘텐츠.',               '/uploads/no-thumb.png', 'general');
+INSERT INTO video (title, description, thumbnail, category, video_type, video_source) VALUES
+('샘플 영상',        '테스트용 샘플 영상입니다.',       '/uploads/sample.jpg',  'general', 'youtube', 'dQw4w9WgXcQ'),
+('심연의 도시',      '느와르풍 스릴러 영화.',           '/uploads/no-thumb.png','movie',   'youtube', 'dQw4w9WgXcQ'),
+('우리 집 이야기',   '가족 드라마 1화 파일럿.',         '/uploads/no-thumb.png','drama',   'youtube', 'dQw4w9WgXcQ'),
+('웃음 폭탄 토크쇼', '게스트와 함께하는 예능 토크쇼.',   '/uploads/no-thumb.png','ent',     'url',     'https://example.com/videos/talkshow.mp4'),
+('별빛 소년단',      '판타지 배경 애니메이션 1화.',      '/uploads/no-thumb.png','anime',   'file',    'sample.mp4'),
+('오늘의 브이로그',  '일상 브이로그 콘텐츠.',            '/uploads/no-thumb.png','general', 'youtube', 'dQw4w9WgXcQ');
 
 
 -- 더미 문의 (member_id는 위에서 만든 회원 순서 기준: 1=admin, 2=honggd, 3=kimyuna, 4=parkjs, 5=leesm)
