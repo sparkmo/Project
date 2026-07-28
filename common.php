@@ -7,20 +7,20 @@
 
 // ----- DB 접속 정보 (실제 값은 .env 로 주입, 커밋하지 않음) -----
 // 1) 인트라넷 자체 DB (직원 계정, 공지 등)
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_HOST', getenv('DB_HOST') ?: '172.20.0.2');
 define('DB_NAME', getenv('DB_NAME') ?: 'intranet_db');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_USER', getenv('DB_USER') ?: 'intre_admin');
+define('DB_PASS', getenv('DB_PASS') ?: 'zhfldk26#');
 define('DB_CHARSET', 'utf8mb4');
 
-// 2) 씨네나잇 회원(고객) DB - 다른 서버(DB서버, 3308 포트)
+// 2) 씨네나잇 회원(고객) DB - 다른 서버(DB서버, 3306 포트 바꿀때도 바꾸는거 가)
 //    이 접속 정보는 인트라넷 서버에만 존재하며, 씨네나잇 웹서버(common.php)에는
 //    절대 배포하지 않습니다. (최소 권한 원칙 - 회원DB는 인트라넷 경유로만 접근)
-define('MEMBER_DB_HOST', getenv('MEMBER_DB_HOST') ?: '172.16.0.10');
-define('MEMBER_DB_PORT', (int)(getenv('MEMBER_DB_PORT') ?: 3308));
+define('MEMBER_DB_HOST', getenv('MEMBER_DB_HOST') ?: '172.20.0.2');
+define('MEMBER_DB_PORT', (int)(getenv('MEMBER_DB_PORT') ?: 3306));
 define('MEMBER_DB_NAME', getenv('MEMBER_DB_NAME') ?: 'ott'); // 실제 DB명은 member_db가 아니라 ott
-define('MEMBER_DB_USER', getenv('MEMBER_DB_USER') ?: 'member_admin');
-define('MEMBER_DB_PASS', getenv('MEMBER_DB_PASS') ?: '');
+define('MEMBER_DB_USER', getenv('MEMBER_DB_USER') ?: 'ott_admin');
+define('MEMBER_DB_PASS', getenv('MEMBER_DB_PASS') ?: 'zhfldk26#');
 
 // 3) 씨네나잇 웹서버 ↔ 인트라넷 서버 간 서버-서버 API 인증용 마스터 토큰
 //    (마이페이지 연동: 씨네나잇이 회원 정보를 화면에 보여줘야 할 때 이 토큰을 실어
