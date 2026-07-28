@@ -42,15 +42,29 @@ if ($video && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') 
     $description = trim($_POST['description'] ?? '');
     $thumbnail   = trim($_POST['thumbnail'] ?? '');
     $category    = trim($_POST['category'] ?? 'general');
-
+    $video_type   = trim($_POST['video_type'] ?? 'youtube');   // 추가
+    $video_source = trim($_POST['video_source'] ?? '');        // 추가
     if ($title === '') {
         $errors[] = '제목을 입력해주세요.';
     }
+    if (!in_array($video_type, ['youtube', 'file', 'url'], true)) {   // 추가
+        $video_type = 'youtube';
+    }
+    if ($video_source === '') {                                       // 추가
+        $errors[] = '영상 소스(video_source)를 입력해주세요.';
+    }
+    
 
     if (!$errors) {
         $pdo_member->prepare(
-            'UPDATE video SET title=?, description=?, thumbnail=?, category=? WHERE video_id=?'
-        )->execute([$title, $description, $thumbnail !== '' ? $thumbnail : null, $category !== '' ? $category : 'general', $id]);
+            'UPDATE video SET title=?, description=?, thumbnail=?, category=?, video_type=?, video_source=? WHERE video_id=?'
+        )->execute([
+            $title, $description,
+            $thumbnail !== '' ? $thumbnail : null,
+            $category !== '' ? $category : 'general',
+            $video_type, $video_source,   // 추가
+            $id
+        ]);
 
         log_action($pdo, $me['id'], 'admin_edit_video', 'video_id=' . $id);
         $success = '수정되었습니다.';
