@@ -16,7 +16,7 @@ services:
 #  그래서 admin-server를 먼저 켜서 네트워크가 만들어지게 해야 db-server가 정상 연결됩니다.)
 networks:
   docker_bridge:
-    name: docker_bridge
+    name: ott-net
     driver: bridge
     ipam:
       config:
