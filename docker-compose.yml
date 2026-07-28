@@ -4,22 +4,17 @@ services:
     container_name: admin-server
     env_file:
       - .env
+
     networks:
-      docker_bridge:
-        ipv4_address: 172.16.0.3 # 인트라넷(Admin) 서버쪽 IP
+      ott-net:
+        ipv4_address: 172.16.0.3
+
     ports:
-      - "8001:80"        # 192.168.20.10[인트라넷과 db에 도커를 돌리는 ip 같은 vmd에 도커2개를 돌려야함]:8001 -> 172.16.0.3:80
+      - "8001:80"
+
     restart: unless-stopped
- 
-# docker_bridge 네트워크를 여기서 실제로 생성합니다.
-# (DBServer2 쪽 docker-compose.yml은 external: true 로 이 네트워크에 붙기만 합니다.
-#  그래서 admin-server를 먼저 켜서 네트워크가 만들어지게 해야 db-server가 정상 연결됩니다.)
+
 networks:
-  docker_bridge:
+  ott-net:
     name: ott-net
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.16.0.0/24
-          gateway: 172.16.0.1
- 
+    external: true
