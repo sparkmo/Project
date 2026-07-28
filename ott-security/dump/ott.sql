@@ -38,9 +38,14 @@ CREATE TABLE video (
     -- 회원과 직접 관계 없음 (writer_id 등 FK 없음)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  
--- 샘플 데이터 (테스트용, 비밀번호는 bcrypt 해시 -> 원문: test1234)
-INSERT INTO member (login_id, password, nickname, email)
-VALUES ('tester', '$2b$10$XOkYDvu./S0eqQf0AQcY7.NVNBm8Jh4iuOkKZp1rnf3Ck6m5BTkD2', '테스터', 'tester@example.com');
+
+-- 시나리오용 관리자 계정 예시 (비밀번호는 실제로는 password_hash()로 새로 생성해서 넣을 것)
+INSERT INTO member (login_id, password, nickname, email, role)
+VALUES ('ott_admin_gh', '$2b$10$XOkYDvu./S0eqQf0AQcY7.NVNBm8Jh4iuOkKZp1rnf3Ck6m5BTkD2', '관리자', 'admin@cinenight.com', 'admin');
  
+--기존 계정 중 하나를 관리자로 지정하고 싶다면:
+--UPDATE member SET role='admin' WHERE login_id='기존_아이디';
+ 
+
 INSERT INTO video (title, description, thumbnail, category)
 VALUES ('샘플 영상', '테스트용 샘플 영상입니다.', '/uploads/sample.jpg', 'general');
