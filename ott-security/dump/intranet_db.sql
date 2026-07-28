@@ -78,14 +78,28 @@ CREATE TABLE `notice` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `notice`
+--
+
+DROP TABLE IF EXISTS `notice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notice` (
+  `notice_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `employee_id` bigint(20) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`notice_id`),
+  KEY `fk_notice_employee` (`employee_id`),
+  CONSTRAINT `fk_notice_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `notice`
 --
 
-LOCK TABLES `notice` WRITE;
-/*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES
-(1,1,'시스템 점검','7월 20일 새벽 2시부터 시스템 점검이 진행됩니다.','2026-07-17 16:27:25');
-/*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
 INSERT INTO `notice` VALUES
