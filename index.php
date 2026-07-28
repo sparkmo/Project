@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/common.php';
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/mail/_lib.php';
 require_login();
 
 $me = current_user($pdo);
@@ -23,6 +24,9 @@ try {
     error_log('index.php member_db 연결 실패: ' . $e->getMessage());
 }
 
+// 안읽은 메일 수 (메일함 로그인이 안 되어 있으면 null - 카드에서 안내만 표시)
+$unseen_mail_count = mail_unseen_count();
+
 $page_title  = '대시보드';
 $active_menu = 'dashboard';
 require __DIR__ . '/includes/header.php';
@@ -44,6 +48,14 @@ require __DIR__ . '/includes/header.php';
     <div class="stat-card">
         <div class="stat-label">공지사항 수</div>
         <div class="stat-value"><?= count($notices) ?></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">안읽은 메일</div>
+        <?php if ($unseen_mail_count !== null): ?>
+            <div class="stat-value"><a href="/mail/inbox.php"><?= $unseen_mail_count ?>건</a></div>
+        <?php else: ?>
+            <div class="stat-value" style="font-size:14px;"><a href="/mail/login.php">로그인 필요</a></div>
+        <?php endif; ?>
     </div>
     <div class="stat-card">
         <div class="stat-label">내 부서</div>

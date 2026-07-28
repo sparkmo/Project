@@ -52,3 +52,24 @@ function mail_build_mailbox_spec(string $folder = 'INBOX'): string {
 
     return '{' . MAIL_HOST . ':' . MAIL_PORT . '/' . implode('/', $flags) . '}' . $folder;
 }
+
+// ----------------------------------------------------------------------
+// 발신(SMTP) 설정 — 메일 쓰기(mail/send.php) 기능에서 사용.
+// 기본값은 수신(IMAP)과 같은 메일 서버 호스트를 쓰되, 포트/암호화 방식만
+// SMTP 제출용(587/STARTTLS)으로 다르게 잡습니다. 환경에 따라 .env 에서
+// 별도 값으로 덮어쓸 수 있습니다.
+// ----------------------------------------------------------------------
+
+define('SMTP_HOST', getenv('SMTP_HOST') ?: MAIL_HOST);
+
+// 제출 포트(submission) 기본 587(STARTTLS). SMTPS(암묵적 SSL)면 465.
+define('SMTP_PORT', (int)(getenv('SMTP_PORT') ?: 587));
+
+// 암호화 방식: starttls | ssl | none
+define('SMTP_ENCRYPTION', getenv('SMTP_ENCRYPTION') ?: 'starttls');
+
+define('SMTP_VALIDATE_CERT', (getenv('SMTP_VALIDATE_CERT') ?: (MAIL_VALIDATE_CERT ? 'true' : 'false')) === 'true');
+
+// 보낸 메일을 저장해둘 IMAP 폴더 이름. hMailServer 기본값은 보통 'Sent'.
+// (서버마다 'Sent Items' 등으로 다를 수 있어 환경변수로 조정 가능하게 함)
+define('MAIL_SENT_FOLDER', getenv('MAIL_SENT_FOLDER') ?: 'Sent');
