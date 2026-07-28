@@ -274,17 +274,17 @@ function mail_smtp_send(string $to, string $subject, string $body): array {
             if (!$ok) return ['ok' => false, 'error' => 'STARTTLS 이후 EHLO에 실패했습니다.', 'raw' => ''];
         }
 
-        $send('AUTH LOGIN');
-        [$ok] = $read('334');
-        if (!$ok) return ['ok' => false, 'error' => '메일 서버가 AUTH LOGIN을 지원하지 않습니다.', 'raw' => ''];
+        //$send('AUTH LOGIN');
+        //[$ok] = $read('334');
+        //if (!$ok) return ['ok' => false, 'error' => '메일 서버가 AUTH LOGIN을 지원하지 않습니다.', 'raw' => ''];
 
-        $send(base64_encode($from));
-        [$ok] = $read('334');
-        if (!$ok) return ['ok' => false, 'error' => '메일 계정 인증에 실패했습니다.', 'raw' => ''];
+        //$send(base64_encode($from));
+        //[$ok] = $read('334');
+        //if (!$ok) return ['ok' => false, 'error' => '메일 계정 인증에 실패했습니다.', 'raw' => ''];
 
-        $send(base64_encode($password));
-        [$ok] = $read('235');
-        if (!$ok) return ['ok' => false, 'error' => '메일 비밀번호 인증에 실패했습니다.', 'raw' => ''];
+        //$send(base64_encode($password));
+        //[$ok] = $read('235');
+        //if (!$ok) return ['ok' => false, 'error' => '메일 비밀번호 인증에 실패했습니다.', 'raw' => ''];
 
         $send('MAIL FROM:<' . $from . '>');
         [$ok] = $read('250');
