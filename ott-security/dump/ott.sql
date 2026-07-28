@@ -14,6 +14,7 @@ CREATE TABLE member (
     password   VARCHAR(255) NOT NULL,                    -- 암호화(해시)된 비밀번호
     nickname   VARCHAR(30)  NOT NULL,                    -- 닉네임
     email      VARCHAR(100) NOT NULL,                    -- 이메일
+    role       ENUM('user','admin') NOT NULL DEFAULT 'user',  -- 이 줄 추가
     created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP  -- 가입일
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  
