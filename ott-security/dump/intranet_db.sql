@@ -51,10 +51,13 @@ CREATE TABLE `employee` (
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
 INSERT INTO `employee` VALUES
-(1,'admin01','1234','관리자','보안팀','Admin','admin@company.com');
+(1,'admin01','1234','관리자','보안팀','Admin','a@hi.xyz'),
+(2,'manager01','1234','김매니저','운영팀','Manager','b@hi.xyz'),
+(3,'user01','1234','이일반','개발팀','User','c@hi.xyz'),
+(4,'user02','1234','박일반','마케팅팀','User','d@hi.xyz'),
+(5,'user03','1234','최일반','고객지원팀','User','e@hi.xyz');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Table structure for table `notice`
 --
