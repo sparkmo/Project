@@ -2,18 +2,31 @@ services:
   intranet:
     build: .
     container_name: admin-server
+
     env_file:
       - .env
 
     networks:
       ott-net:
-        ipv4_address: 172.16.0.3
+        ipv4_address: 172.16.0.3   # Admin 웹 서버 컨테이너 IP
 
     ports:
-      - "8001:80"
+      - "8001:80"                  # VM_IP:8001 → 컨테이너:80
 
     restart: unless-stopped
 
+# DB 서버에서 생성한 ott-net 네트워크를 사용합니다.
+# DB 컨테이너(172.16.0.2)와 Admin 컨테이너(172.16.0.3)가
+# 같은 Docker 네트워크에 연결되어 서로 통신할 수 있습니다.
+#
+# DB 쪽 docker-compose.yml 에서 이미 ott-net을 생성하므로
+# 여기서는 external: true 로 기존 네트워크에 연결만 합니다.
+#
+# 실행 순서:
+# 1. DB 서버 docker compose up -d
+# 2. Admin 서버 docker compose up -d
+#
+# PHP에서는 DB_HOST=172.16.0.2 또는 ott_db 로 접속 가능
 networks:
   ott-net:
     name: ott-net
