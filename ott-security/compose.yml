@@ -1,0 +1,26 @@
+services:
+  ott_db:
+    image: mariadb:latest
+    container_name: ott_db
+    restart: unless-stopped
+
+    environment:
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
+
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./conf/audit.cnf:/etc/mysql/conf.d/audit.cnf:ro
+      - ./logs:/var/log/mariadb
+
+    networks:
+      ott-net:
+        ipv4_address: 172.16.0.2
+
+networks:
+  ott-net:
+    name: ott-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1
