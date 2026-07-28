@@ -86,15 +86,14 @@ LOCK TABLES `notice` WRITE;
 INSERT INTO `notice` VALUES
 (1,1,'시스템 점검','7월 20일 새벽 2시부터 시스템 점검이 진행됩니다.','2026-07-17 16:27:25');
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
+LOCK TABLES `notice` WRITE;
+/*!40000 ALTER TABLE `notice` DISABLE KEYS */;
+INSERT INTO `notice` VALUES
+(1,1,'시스템 점검','7월 20일 새벽 2시부터 시스템 점검이 진행됩니다.','2026-07-17 16:27:25'),
+(2,2,'신규 인원 안내','이번 주부터 개발팀/마케팅팀/고객지원팀에 신규 인원이 합류합니다. 사내 계정 발급 완료했으니 참고 바랍니다.','2026-07-18 09:12:00'),
+(3,1,'보안 정책 업데이트','사내 메일 비밀번호는 인트라넷 로그인 비밀번호와 별도로 관리되니 유의해주세요.','2026-07-19 10:40:15'),
+(4,3,'개발팀 배포 일정','다음 배포는 7월 25일 오후 3시로 예정되어 있습니다.','2026-07-20 14:05:30'),
+(5,4,'마케팅 캠페인 공지','8월 프로모션 관련 자료는 공유 드라이브에 업로드했습니다.','2026-07-21 11:20:00'),
+(6,5,'고객 문의 응대 가이드','신규 문의 채널 관련 응대 가이드를 첨부합니다. 확인 부탁드립니다.','2026-07-22 08:55:45');
+/*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2026-07-21 18:41:51
