@@ -29,13 +29,14 @@ CREATE TABLE inquiry (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  
 CREATE TABLE video (
-    video_id    BIGINT AUTO_INCREMENT PRIMARY KEY,       -- 영상 번호
-    title       VARCHAR(100) NOT NULL,                   -- 영상 제목
-    description TEXT,                                    -- 영상 설명
-    thumbnail   VARCHAR(255),                             -- 썸네일 경로
-    category    VARCHAR(50) NOT NULL DEFAULT 'general',   -- 장르
-    upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP -- 등록일
-    -- 회원과 직접 관계 없음 (writer_id 등 FK 없음)
+    video_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title        VARCHAR(100) NOT NULL,
+    description  TEXT,
+    thumbnail    VARCHAR(255),
+    category     VARCHAR(50) NOT NULL DEFAULT 'general',
+    video_type   ENUM('youtube','file','url') NOT NULL DEFAULT 'youtube',  -- 추가
+    video_source VARCHAR(255),                                             -- 추가
+    upload_date  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  
 
