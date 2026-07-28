@@ -37,9 +37,29 @@ $description = trim($_POST['description'] ?? '');
 $thumbnail   = trim($_POST['thumbnail'] ?? '');
 $category    = trim($_POST['category'] ?? 'general');
 
+$title        = trim($_POST['title'] ?? '');
+$description  = trim($_POST['description'] ?? '');
+$thumbnail    = trim($_POST['thumbnail'] ?? '');
+$category     = trim($_POST['category'] ?? 'general');
+$video_type   = trim($_POST['video_type'] ?? 'youtube');      // 추가
+$video_source = trim($_POST['video_source'] ?? '');           // 추가
+
 if ($title === '') {
     api_fail(400, '제목은 필수입니다.');
 }
+if (!in_array($video_type, ['youtube', 'file', 'url'], true)) {   // 추가
+    $video_type = 'youtube';
+}
+if ($video_source === '') {                                       // 추가
+    api_fail(400, '영상 소스(video_source)는 필수입니다.');
+}
+
+
+$stmt = $pdo_member->prepare(
+    'INSERT INTO video (title, description, thumbnail, category, video_type, video_source)
+     VALUES (?, ?, ?, ?, ?, ?)'
+);
+$stmt->execute([$title, $description, $thumbnail !== '' ? $thumbnail : null, $category !== '' ? $category : 'general', $video_type, $video_source]);
 
 try {
     $pdo_member = get_member_pdo();
