@@ -11,10 +11,19 @@ FROM php:8.2-apache
 #
 # 나중에 메일 기능이 필요해지면, php:8.2-apache-bookworm 베이스로 바꾸고 아래를
 # 추가하면 됩니다:
-#   RUN apt-get install -y --no-install-recommends libc-client2007e-dev libkrb5-dev \
-#       && ln -sf /usr/lib/x86_64-linux-gnu/libc-client2007e.a /usr/lib/x86_64-linux-gnu/libc-client.a \
-#       && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-#       && docker-php-ext-install imap
+RUN apt-get install -y --no-install-recommends libc-client2007e-dev libkrb5-dev \
+      && ln -sf /usr/lib/x86_64-linux-gnu/libc-client2007e.a /usr/lib/x86_64-linux-gnu/libc-client.a \
+      && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+      && docker-php-ext-install imap
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libc-client2007e-dev \
+        libkrb5-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -sf /usr/lib/x86_64-linux-gnu/libc-client2007e.a /usr/lib/x86_64-linux-gnu/libc-client.a \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap
+    
 RUN docker-php-ext-install pdo_mysql
 
 COPY . /var/www/html/
