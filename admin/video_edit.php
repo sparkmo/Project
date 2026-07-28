@@ -115,6 +115,22 @@ require __DIR__ . '/../includes/header.php';
                    style="width:100%; padding:8px; box-sizing:border-box;">
         </div>
 
+        <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:13px; margin-bottom:4px;">영상 타입</label>
+            <select name="video_type" style="width:100%; padding:8px; box-sizing:border-box;">
+                <?php foreach (['youtube' => '유튜브', 'file' => '파일', 'url' => '외부 URL'] as $val => $label): ?>
+                    <option value="<?= $val ?>" <?= ($video['video_type'] ?? 'youtube') === $val ? 'selected' : '' ?>>
+                        <?= $label ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:13px; margin-bottom:4px;">영상 소스 (유튜브ID / 파일명 / URL)</label>
+            <input type="text" name="video_source" maxlength="255" value="<?= htmlspecialchars($video['video_source'] ?? '') ?>"
+                   style="width:100%; padding:8px; box-sizing:border-box;">
+        </div>
+
         <button type="submit" class="btn-write">수정 완료</button>
         <a class="btn btn-ghost" href="/admin/videos.php" style="margin-left:8px;">목록으로</a>
     </form>
