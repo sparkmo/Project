@@ -37,6 +37,7 @@ define('MEMBER_DB_PASS', getenv('MEMBER_DB_PASS') ?: 'zhfldk26#');
 //       방어가 되지 못한다. 문제의 본질은 "웹쉘(RCE) 자체를 막지 못했다"는
 //       것이지, 토큰이 코드에 있느냐 env에 있느냐가 아니다.
 define('INTRANET_API_MASTER_TOKEN', getenv('INTRANET_API_MASTER_TOKEN') ?: '');
+define('AES_KEY', getenv('AES_KEY') ?: '');
 
 // ----- 사내 메일 서버 연동 설정 -----
 // 별도의 (윈도우) 메일 서버에 IMAP으로 접속해서 직원 메일함을 읽어오는 기능용.
