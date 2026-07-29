@@ -34,20 +34,24 @@ if ($login_id === '' || $password === '') {
 }
 
 try {
-    $pdo_member = get_member_pdo();
+   // 바꿀 것 (users 테이블, email로 찾고 AES_DECRYPT로 비밀번호 비교)
+$key = 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7';
 
-    $stmt = $pdo_member->prepare(
-        'SELECT member_id, login_id, password, nickname, email, role, created_at
-         FROM member WHERE login_id = ?'
-    );
-    $stmt->execute([$login_id]);
-    $member = $stmt->fetch();
+// login_id 대신 email로 찾음 (users 테이블 구조)
+$stmt = $pdo_member->prepare(
+    "SELECT id, role, created_at,
+            AES_DECRYPT(email,    '$key') AS email,
+            AES_DECRYPT(name,     '$key') AS name,
+            AES_DECRYPT(password, '$key') AS password_plain
+     FROM users
+     WHERE AES_DECRYPT(email, '$key') = ?"
+);
+$stmt->execute([$login_id]); // 씨네나잇은 username 필드로 받지만 실제론 email로 매핑
 
-    if (!$member || !password_verify($password, $member['password'])) {
-        log_action($pdo, null, 'api_auth_login_fail', 'login_id=' . $login_id);
-        api_fail(401, '아이디 또는 비밀번호가 올바르지 않습니다.');
-    }
+$member = $stmt->fetch();
 
+// bcrypt 대신 평문 비교 (AES_DECRYPT로 꺼낸 값이 원래 비밀번호)
+if (!$member || !hash_equals((string)$member['password_plain'], $password)) { ... }
     log_action($pdo, null, 'api_auth_login_ok', 'login_id=' . $login_id);
 
     unset($member['password']); // 세션에 넘길 필요 없는 필드는 응답에서 제외
