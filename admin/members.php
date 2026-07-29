@@ -15,13 +15,13 @@ $members = [];
  
 try {
     $pdo_member = get_member_pdo();
-    $stmt = $pdo_member->prepare(
-      "SELECT id, role, created_at,
-              AES_DECRYPT(email, ?) AS email,
-              AES_DECRYPT(phone, ?) AS phone,
-              AES_DECRYPT(name,  ?) AS name
-       FROM users ORDER BY id DESC"
-  );
+   $stmt = $pdo_member->prepare(
+ "SELECT id, role, created_at,
+         CONVERT(AES_DECRYPT(email, UNHEX(?)) USING utf8mb4) AS email,
+         CONVERT(AES_DECRYPT(phone, UNHEX(?)) USING utf8mb4) AS phone,
+         CONVERT(AES_DECRYPT(name, UNHEX(?)) USING utf8mb4) AS name
+  FROM users ORDER BY id DESC"
+ );
   $stmt->execute([AES_KEY, AES_KEY, AES_KEY]);
   $members = $stmt->fetchAll();
 } catch (PDOException $e) {
