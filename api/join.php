@@ -4,36 +4,39 @@
  *
  * 씨네나잇(OTT) 웹서버 ↔ 인트라넷 서버 간 서버-서버 회원가입 대행 API.
  *
- * ott_db 최종 스키마 (member 테이블) 기준:
- *   member_id, login_id, password(bcrypt), nickname, email, created_at
- * grade/phone 컬럼은 이 테이블에 없습니다.
+ * ott DB 실제 스키마 (users 테이블) 기준:
+ *   id, role, created_at, email, phone, password, name (email/phone/password/name은
+ *   전부 varbinary 컬럼이며 AES_ENCRYPT로 암호화해서 저장한다 - api/auth.php,
+ *   api/members.php와 동일한 키/방식).
+ * login_id/nickname 컬럼은 없다: username은 형식만 검증하고 저장하지 않으며,
+ * nickname은 users.name 컬럼에 매핑한다. phone은 가입 폼에서 받지 않으므로 NULL.
  */
-
+ 
 require_once __DIR__ . '/../common.php';
-
+ 
 header('Content-Type: application/json; charset=utf-8');
-
+ 
 function api_fail(int $status, string $message): void {
     http_response_code($status);
     echo json_encode(['ok' => false, 'error' => $message], JSON_UNESCAPED_UNICODE);
     exit;
 }
-
+ 
 $token = $_SERVER['HTTP_X_API_TOKEN'] ?? ($_POST['token'] ?? '');
 if (!is_string($token) || $token === '' || $token !== INTRANET_API_MASTER_TOKEN) {
     log_action($pdo, null, 'api_join_auth_fail', 'ip=' . ($_SERVER['REMOTE_ADDR'] ?? '-'));
     api_fail(401, 'invalid token');
 }
-
+ 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     api_fail(405, 'POST only');
 }
-
+ 
 $login_id = trim($_POST['username'] ?? '');   // 씨네나잇 폼 필드명(username)은 그대로 받고, DB 컬럼명만 login_id로 매핑
 $password = (string)($_POST['password'] ?? '');
 $nickname = trim($_POST['nickname'] ?? '');
 $email    = trim($_POST['email'] ?? '');
-
+ 
 if ($login_id === '' || $password === '' || $nickname === '' || $email === '') {
     api_fail(400, '모든 항목을 입력해주세요.');
 }
@@ -46,32 +49,41 @@ if (strlen($password) < 6) {
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     api_fail(400, '올바른 이메일 형식이 아닙니다.');
 }
-
+ 
 try {
     $pdo_member = get_member_pdo();
-
+ 
+    // cl.key 파일의 값을 AES 키로 사용 (api/auth.php, api/members.php와 동일)
+    define('AES_KEY', 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7');
+ 
     $stmt = $pdo_member->prepare(
-    "SELECT id FROM users WHERE AES_DECRYPT(email, 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7') = ?"
+        "SELECT id FROM users WHERE AES_DECRYPT(email, '" . AES_KEY . "') = ?"
     );
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
         api_fail(409, '이미 사용 중인 아이디입니다.');
     }
-
-    $hash = password_hash($password, PASSWORD_DEFAULT);
-
+ 
+    // users.password도 AES_ENCRYPT로 저장 (api/auth.php가 AES_DECRYPT 후 평문 비교하므로
+    // bcrypt 해시가 아니라 비밀번호 원문을 암호화해서 넣어야 함)
     $stmt = $pdo_member->prepare(
-        'INSERT INTO member (login_id, password, nickname, email)
-         VALUES (?, ?, ?, ?)'
+        "INSERT INTO users (role, email, phone, password, name)
+         VALUES ('USER',
+                 AES_ENCRYPT(?, '" . AES_KEY . "'),
+                 NULL,
+                 AES_ENCRYPT(?, '" . AES_KEY . "'),
+                 AES_ENCRYPT(?, '" . AES_KEY . "'))"
     );
-    $stmt->execute([$login_id, $hash, $nickname, $email]);
-
+    $stmt->execute([$email, $password, $nickname]);
+ 
     $new_id = (int)$pdo_member->lastInsertId();
-
+ 
+    // login_id는 users 테이블에 저장할 컬럼이 없어 형식 검증에만 사용하고 저장하지는 않는다
     log_action($pdo, null, 'api_join', 'login_id=' . $login_id . ' new_id=' . $new_id);
-
+ 
     echo json_encode(['ok' => true, 'id' => $new_id], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
     error_log('api/join.php ott 연결 실패: ' . $e->getMessage());
     api_fail(502, 'ott db unavailable');
 }
+ 
