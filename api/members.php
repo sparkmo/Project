@@ -27,21 +27,21 @@ try {
     $pdo_member = get_member_pdo();
  
     $select = "SELECT id, role, created_at,
-                AES_DECRYPT(email,    '" . AES_KEY . "') AS email,
-                AES_DECRYPT(phone,    '" . AES_KEY . "') AS phone,
-                AES_DECRYPT(name,     '" . AES_KEY . "') AS name
-               FROM users";
- 
-    if ($user_id > 0) {
-        $stmt = $pdo_member->prepare($select . ' WHERE id = ?');
-        $stmt->execute([$user_id]);
-        $rows = $stmt->fetchAll();
-    } else {
-        // [VULN-API-2] id 없으면 전체 반환 (그대로 유지)
-        $stmt = $pdo_member->query($select . ' ORDER BY id DESC');
-        $rows = $stmt->fetchAll();
-    }
- 
+            AES_DECRYPT(email, ?) AS email,
+            AES_DECRYPT(phone, ?) AS phone,
+            AES_DECRYPT(name,  ?) AS name
+           FROM users";
+
+   if ($user_id > 0) {
+       $stmt = $pdo_member->prepare($select . ' WHERE id = ?');
+       $stmt->execute([AES_KEY, AES_KEY, AES_KEY, $user_id]);
+       $rows = $stmt->fetchAll();
+   } else {
+       $stmt = $pdo_member->prepare($select . ' ORDER BY id DESC');
+       $stmt->execute([AES_KEY, AES_KEY, AES_KEY]);
+       $rows = $stmt->fetchAll();
+   }
+    
     log_action(
         $pdo,
         null,
