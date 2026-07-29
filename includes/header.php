@@ -34,7 +34,8 @@ $me = current_user($pdo);
         <div class="sidebar-user">
             <div class="name"><?= htmlspecialchars($me['name']) ?></div>
             <div><?= htmlspecialchars($me['dept']) ?> · <?= htmlspecialchars($me['grade'] === 'admin' ? '관리자' : '일반') ?></div>
-            <div style="margin-top:8px;"><a href="/logout.php" style="color:var(--sidebar-text);">로그아웃</a></div>
+            <div style="margin-top:8px;"><a href="/change_password.php" style="color:var(--sidebar-text);">비밀번호 변경</a></div>
+            <div style="margin-top:4px;"><a href="/logout.php" style="color:var(--sidebar-text);">로그아웃</a></div>
         </div>
         <?php endif; ?>
     </aside>
