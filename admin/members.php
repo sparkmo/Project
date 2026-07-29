@@ -1,7 +1,8 @@
 <?php
 /**
  * admin/members.php
- * ott_db.users 테이블 기준 (암호화 컬럼은 일단 그대로 표시, 복호화 미적용)
+ * ott_db.users 테이블 기준
+ * MariaDB AES_DECRYPT()로 email/phone/name 복호화해서 표시
  */
 require_once __DIR__ . '/../common.php';
 require_once __DIR__ . '/../auth.php';
@@ -9,14 +10,20 @@ require_admin();
  
 $me = current_user($pdo);
  
-$errors = [];
+$errors  = [];
 $members = [];
+ 
+// cl.key 파일의 값을 AES 키로 사용
+define('AES_KEY', 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7');
  
 try {
     $pdo_member = get_member_pdo();
     $stmt = $pdo_member->query(
-        'SELECT id, role, email, phone, name, created_at
-         FROM users ORDER BY id DESC'
+        "SELECT id, role, created_at,
+                AES_DECRYPT(email,    '" . AES_KEY . "') AS email,
+                AES_DECRYPT(phone,    '" . AES_KEY . "') AS phone,
+                AES_DECRYPT(name,     '" . AES_KEY . "') AS name
+         FROM users ORDER BY id DESC"
     );
     $members = $stmt->fetchAll();
 } catch (PDOException $e) {
@@ -36,7 +43,8 @@ require __DIR__ . '/../includes/header.php';
 <div class="card">
     <p style="font-size:13px; color:var(--muted, #888); margin-bottom:16px;">
         씨네나잇 서비스에 가입한 회원 목록입니다.
-        ⚠️ email/phone/name은 암호화된 상태로 표시됩니다 (복호화 미적용).
+        이 데이터는 별도의 회원 데이터베이스(내부망 전용)에 저장되어 있으며,
+        씨네나잇 웹서버에서는 직접 조회할 수 없습니다.
     </p>
  
     <?php foreach ($errors as $e): ?>
@@ -49,8 +57,9 @@ require __DIR__ . '/../includes/header.php';
             <tr>
                 <th style="width:50px;">ID</th>
                 <th style="width:80px;">권한</th>
-                <th>이메일 (암호화)</th>
-                <th>이름 (암호화)</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화번호</th>
                 <th style="width:160px;">가입일</th>
             </tr>
         </thead>
@@ -58,9 +67,10 @@ require __DIR__ . '/../includes/header.php';
         <?php foreach ($members as $m): ?>
             <tr>
                 <td><?= (int)$m['id'] ?></td>
-                <td><?= htmlspecialchars($m['role']) ?></td>
-                <td style="font-size:11px; color:var(--muted,#888);">[암호화됨]</td>
-                <td style="font-size:11px; color:var(--muted,#888);">[암호화됨]</td>
+                <td><?= htmlspecialchars($m['role'] ?? '') ?></td>
+                <td><?= htmlspecialchars($m['name'] ?? '[복호화 실패]') ?></td>
+                <td><?= htmlspecialchars($m['email'] ?? '[복호화 실패]') ?></td>
+                <td><?= htmlspecialchars($m['phone'] ?? '[복호화 실패]') ?></td>
                 <td><?= htmlspecialchars(format_datetime($m['created_at'])) ?></td>
             </tr>
         <?php endforeach; ?>
