@@ -21,9 +21,6 @@ if (!is_string($token) || $token === '' || $token !== INTRANET_API_MASTER_TOKEN)
     api_fail(401, 'invalid token');
 }
  
-// cl.key 파일의 값을 AES 키로 사용
-define('AES_KEY', 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7');
- 
 $user_id = (int)($_GET['id'] ?? 0);
  
 try {
