@@ -3,39 +3,39 @@ require_once __DIR__ . '/common.php';
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/mail/_lib.php';
 require_login();
-
+ 
 $me = current_user($pdo);
-
+ 
 // 최근 공지 5건
 $notices = $pdo->query(
     'SELECT n.notice_id AS id, n.title, n.created_at, e.name AS author_name
      FROM notice n JOIN employee e ON e.employee_id = n.employee_id
      ORDER BY n.created_at DESC LIMIT 5'
 )->fetchAll();
-
+ 
 // 씨네나잇 회원/영상 수 (member_db 접속 실패해도 대시보드 전체가 죽지 않도록 별도 try)
 $member_count = null;
 $video_count  = null;
 try {
     $pdo_member  = get_member_pdo();
-    $member_count = (int)$pdo_member->query('SELECT COUNT(*) FROM members')->fetchColumn();
-    $video_count  = (int)$pdo_member->query('SELECT COUNT(*) FROM videos')->fetchColumn();
+    $member_count = (int)$pdo_member->query('SELECT COUNT(*) FROM users')->fetchColumn();
+    $video_count  = (int)$pdo_member->query('SELECT COUNT(*) FROM video')->fetchColumn();
 } catch (PDOException $e) {
     error_log('index.php member_db 연결 실패: ' . $e->getMessage());
 }
-
+ 
 // 안읽은 메일 수 (메일함 로그인이 안 되어 있으면 null - 카드에서 안내만 표시)
 $unseen_mail_count = mail_unseen_count();
-
+ 
 $page_title  = '대시보드';
 $active_menu = 'dashboard';
 require __DIR__ . '/includes/header.php';
 ?>
-
+ 
 <div class="topbar">
     <h1>대시보드</h1>
 </div>
-
+ 
 <div class="stat-grid">
     <div class="stat-card">
         <div class="stat-label">씨네나잇 회원 수</div>
@@ -62,7 +62,7 @@ require __DIR__ . '/includes/header.php';
         <div class="stat-value" style="font-size:16px;"><?= htmlspecialchars($me['dept']) ?></div>
     </div>
 </div>
-
+ 
 <div class="card">
     <div class="card-title">
         공지사항
@@ -87,5 +87,5 @@ require __DIR__ . '/includes/header.php';
         </table>
     <?php endif; ?>
 </div>
-
+ 
 <?php require __DIR__ . '/includes/footer.php'; ?>
