@@ -27,10 +27,10 @@ try {
     $pdo_member = get_member_pdo();
  
     $select = "SELECT id, role, created_at,
-            AES_DECRYPT(email, ?) AS email,
-            AES_DECRYPT(phone, ?) AS phone,
-            AES_DECRYPT(name,  ?) AS name
-           FROM users";
+        CONVERT(AES_DECRYPT(email,    UNHEX('" . AES_KEY . "')) USING utf8mb4) AS email,
+        CONVERT(AES_DECRYPT(phone,    UNHEX('" . AES_KEY . "')) USING utf8mb4) AS phone,
+        CONVERT(AES_DECRYPT(name,     UNHEX('" . AES_KEY . "')) USING utf8mb4) AS name
+    FROM users";
 
    if ($user_id > 0) {
        $stmt = $pdo_member->prepare($select . ' WHERE id = ?');
