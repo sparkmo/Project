@@ -32,8 +32,7 @@ if (!is_string($token) || $token === '' || $token !== INTRANET_API_MASTER_TOKEN)
 try {
     $pdo_member = get_member_pdo();
  
-    // cl.key 파일의 값을 AES 키로 사용 (api/auth.php, api/join.php와 동일)
-    define('AES_KEY', 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7');
+    // AES_KEY는 common.php에서 정의 (.env의 AES_KEY 값)
  
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $login_id = trim($_POST['username'] ?? '');
