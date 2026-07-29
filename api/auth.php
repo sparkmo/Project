@@ -36,10 +36,11 @@ if ($login_id === '' || $password === '') {
 try {
     $pdo_member = get_member_pdo();
 
-  $stmt = $pdo_member->prepare(
-        "SELECT id FROM users WHERE AES_DECRYPT(email, 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7') = ?"
+    $stmt = $pdo_member->prepare(
+        'SELECT member_id, login_id, password, nickname, email, role, created_at
+         FROM member WHERE login_id = ?'
     );
-    $stmt->execute([$email]);
+    $stmt->execute([$login_id]);
     $member = $stmt->fetch();
 
     if (!$member || !password_verify($password, $member['password'])) {
