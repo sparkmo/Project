@@ -11,17 +11,17 @@
 require_once __DIR__ . '/../common.php';
 require_once __DIR__ . '/../auth.php';
 require_admin();
-
+ 
 $me = current_user($pdo);
-
+ 
 $errors = [];
 $success = '';
 $inquiries = [];
-
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_status') {
     $id     = (int)($_POST['id'] ?? 0);
     $status = $_POST['status'] ?? '';
-
+ 
     if (!in_array($status, ['대기', '처리완료'], true)) {
         $errors[] = '올바르지 않은 상태값입니다.';
     } else {
@@ -36,28 +36,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
         }
     }
 }
-
+ 
 try {
     $pdo_member = get_member_pdo();
+ 
+    // cl.key 파일의 값을 AES 키로 사용 (api/auth.php 등과 동일)
+    define('AES_KEY', 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7');
+ 
     $inquiries = $pdo_member->query(
-        'SELECT i.inquiry_id, i.title, i.content, i.status, i.created_at,
-                m.login_id, m.nickname
+        "SELECT i.inquiry_id, i.title, i.content, i.status, i.created_at,
+                AES_DECRYPT(u.email, '" . AES_KEY . "') AS email,
+                AES_DECRYPT(u.name,  '" . AES_KEY . "') AS nickname
          FROM inquiry i
-         JOIN member m ON m.member_id = i.member_id
-         ORDER BY i.created_at DESC'
+         JOIN users u ON u.id = i.member_id
+         ORDER BY i.created_at DESC"
     )->fetchAll();
 } catch (PDOException $e) {
     error_log('admin/inquiries.php 조회 실패: ' . $e->getMessage());
     $errors[] = '회원 데이터베이스에 연결할 수 없습니다. 네트워크/접속 정보를 확인해주세요.';
 }
-
+ 
 $page_title  = '관리자 - 문의 관리(씨네나잇)';
 $active_menu = 'admin_inquiries';
 require __DIR__ . '/../includes/header.php';
 ?>
-
+ 
 <div class="topbar"><h1>문의 관리 (씨네나잇 OTT)</h1></div>
-
+ 
 <div class="card">
     <?php if ($success): ?>
         <div style="color:var(--accent); font-size:13px; margin-bottom:12px;"><?= htmlspecialchars($success) ?></div>
@@ -65,7 +70,7 @@ require __DIR__ . '/../includes/header.php';
     <?php foreach ($errors as $e): ?>
         <div style="color:var(--danger); font-size:13px; margin-bottom:12px;"><?= htmlspecialchars($e) ?></div>
     <?php endforeach; ?>
-
+ 
     <?php if ($inquiries): ?>
     <table class="data-table">
         <thead>
@@ -82,7 +87,7 @@ require __DIR__ . '/../includes/header.php';
         <?php foreach ($inquiries as $q): ?>
             <tr>
                 <td><?= (int)$q['inquiry_id'] ?></td>
-                <td><?= htmlspecialchars($q['nickname']) ?> (@<?= htmlspecialchars($q['login_id']) ?>)</td>
+                <td><?= htmlspecialchars($q['nickname']) ?> (<?= htmlspecialchars($q['email']) ?>)</td>
                 <td>
                     <?= htmlspecialchars($q['title']) ?>
                     <div style="font-size:12px; color:var(--muted, #888); margin-top:4px;">
@@ -109,5 +114,5 @@ require __DIR__ . '/../includes/header.php';
         <p style="font-size:13px; color:var(--muted, #888);">등록된 문의가 없습니다.</p>
     <?php endif; ?>
 </div>
-
+ 
 <?php require __DIR__ . '/../includes/footer.php'; ?>
