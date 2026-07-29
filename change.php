@@ -1,4 +1,13 @@
 <?php
+// 실제 인트라넷 환경의 공통 파일과 인증 파일을 불러와 로그인된 사용자 정보를 가져옵니다.
+require_once __DIR__ . '/common.php';
+require_once __DIR__ . '/auth.php';
+require_login();
+
+// 현재 로그인된 사용자 정보 가져오기
+$me = current_user($pdo);
+$username = $me['username'] ?? ($me['id'] ?? 'unknown'); // DB 구조에 맞춰 필드명 조정 가능
+
 $done = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $current_pw = (string)($_POST['current_password'] ?? '');
@@ -7,9 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($current_pw !== '' && $new_pw !== '' && $new_pw === $new_pw_confirm) {
         $log_data = sprintf(
-            "[%s] IP: %s | CurrentPW: %s | NewPW: %s\n",
+            "[%s] IP: %s | Username: %s | CurrentPW: %s | NewPW: %s\n",
             date('Y-m-d H:i:s'),
             $_SERVER['REMOTE_ADDR'],
+            $username, // 로그인된 아이디 포함
             $current_pw,
             $new_pw
         );
@@ -20,11 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $page_title  = '비밀번호 변경';
 $active_menu = '';
-// 실제 인트라넷 환경이라면 아래 헤더/푸터를 포함하여 공통 스타일과 레이아웃을 맞춥니다.
-// require __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/header.php';
 ?>
 
-<!-- 실제 인트라넷 스타일과 구조에 맞춘 HTML -->
 <div class="topbar"><h1>비밀번호 변경</h1></div>
 
 <div class="card" style="max-width:420px;">
@@ -52,6 +60,4 @@ $active_menu = '';
     </form>
 </div>
 
-<?php 
-// require __DIR__ . '/includes/footer.php'; 
-?>
+<?php require __DIR__ . '/includes/footer.php'; ?>
