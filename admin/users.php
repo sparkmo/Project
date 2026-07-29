@@ -1,3 +1,8 @@
+/**
+ * admin/users.php
+ * ott_db.users 테이블 기준
+ * MariaDB AES_DECRYPT()로 email/phone/name 복호화해서 표시
+ */
 <?php
 require_once __DIR__ . '/../common.php';
 require_once __DIR__ . '/../auth.php';
