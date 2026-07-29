@@ -1,56 +1,115 @@
 <?php
 /**
- * api/videos_upload.php
- *
- * 영상 등록(생성 전용) API. ott_db.video 테이블은 회원과 관계가 없으므로
- * writer_username 개념 자체를 제거했습니다.
+ * admin/video_edit.php
+ * ott_db.video 메타데이터 수정 화면.
  */
- 
 require_once __DIR__ . '/../common.php';
+require_once __DIR__ . '/../auth.php';
+require_admin();
  
-header('Content-Type: application/json; charset=utf-8');
+$me = current_user($pdo);
+$id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
+$errors = [];
+$success = '';
  
-function api_fail(int $status, string $message): void {
-    http_response_code($status);
-    echo json_encode(['ok' => false, 'error' => $message], JSON_UNESCAPED_UNICODE);
+if ($id <= 0) {
+    header('Location: /admin/videos.php');
     exit;
-}
- 
-$token = $_SERVER['HTTP_X_API_TOKEN'] ?? ($_POST['token'] ?? '');
-if (!is_string($token) || $token === '' || $token !== INTRANET_API_MASTER_TOKEN) {
-    log_action($pdo, null, 'api_videos_upload_auth_fail', 'ip=' . ($_SERVER['REMOTE_ADDR'] ?? '-'));
-    api_fail(401, 'invalid token');
-}
- 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    api_fail(405, 'POST only');
-}
- 
-$title        = trim($_POST['title'] ?? '');
-$description  = trim($_POST['description'] ?? '');
-$thumbnail    = trim($_POST['thumbnail'] ?? '');
-$category     = trim($_POST['category'] ?? 'general');
- 
-if ($title === '') {
-    api_fail(400, '제목은 필수입니다.');
 }
  
 try {
     $pdo_member = get_member_pdo();
- 
-    $stmt = $pdo_member->prepare(
-        'INSERT INTO video (title, description, thumbnail, category)
-         VALUES (?, ?, ?, ?)'
-    );
-    $stmt->execute([$title, $description, $thumbnail !== '' ? $thumbnail : null, $category !== '' ? $category : 'general']);
- 
-    $new_id = (int)$pdo_member->lastInsertId();
- 
-    log_action($pdo, null, 'api_videos_upload', 'new_id=' . $new_id);
- 
-    echo json_encode(['ok' => true, 'id' => $new_id], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
-    error_log('api/videos_upload.php ott 연결 실패: ' . $e->getMessage());
-    api_fail(502, 'ott db unavailable');
+    error_log('admin/video_edit.php 연결 실패: ' . $e->getMessage());
+    $errors[] = '회원 데이터베이스에 연결할 수 없습니다.';
 }
+ 
+$stmt = isset($pdo_member) ? $pdo_member->prepare('SELECT * FROM video WHERE video_id = ?') : null;
+if ($stmt) {
+    $stmt->execute([$id]);
+    $video = $stmt->fetch();
+} else {
+    $video = null;
+}
+ 
+if (!$video && !$errors) {
+    header('Location: /admin/videos.php');
+    exit;
+}
+ 
+if ($video && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update') {
+    $title       = trim($_POST['title'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+    $thumbnail   = trim($_POST['thumbnail'] ?? '');
+    $category    = trim($_POST['category'] ?? 'general');
+    if ($title === '') {
+        $errors[] = '제목을 입력해주세요.';
+    }
+ 
+    if (!$errors) {
+        $pdo_member->prepare(
+            'UPDATE video SET title=?, description=?, thumbnail=?, category=? WHERE video_id=?'
+        )->execute([
+            $title, $description,
+            $thumbnail !== '' ? $thumbnail : null,
+            $category !== '' ? $category : 'general',
+            $id
+        ]);
+ 
+        log_action($pdo, $me['id'], 'admin_edit_video', 'video_id=' . $id);
+        $success = '수정되었습니다.';
+ 
+        $stmt->execute([$id]);
+        $video = $stmt->fetch();
+    }
+}
+ 
+$page_title  = '관리자 - 영상 수정(씨네나잇)';
+$active_menu = 'admin_videos';
+require __DIR__ . '/../includes/header.php';
+?>
+ 
+<div class="topbar"><h1>영상 수정</h1></div>
+ 
+<div class="card" style="max-width:640px;">
+    <?php if ($success): ?>
+        <div style="color:var(--accent); font-size:13px; margin-bottom:12px;"><?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
+    <?php foreach ($errors as $e): ?>
+        <div style="color:var(--danger); font-size:13px; margin-bottom:12px;"><?= htmlspecialchars($e) ?></div>
+    <?php endforeach; ?>
+ 
+    <?php if ($video): ?>
+    <form method="post">
+        <input type="hidden" name="action" value="update">
+        <input type="hidden" name="id" value="<?= (int)$video['video_id'] ?>">
+ 
+        <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:13px; margin-bottom:4px;">제목</label>
+            <input type="text" name="title" maxlength="100" value="<?= htmlspecialchars($video['title']) ?>"
+                   style="width:100%; padding:8px; box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:13px; margin-bottom:4px;">설명</label>
+            <textarea name="description" rows="4"
+                      style="width:100%; padding:8px; box-sizing:border-box;"><?= htmlspecialchars($video['description'] ?? '') ?></textarea>
+        </div>
+        <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:13px; margin-bottom:4px;">카테고리</label>
+            <input type="text" name="category" maxlength="50" value="<?= htmlspecialchars($video['category']) ?>"
+                   style="width:100%; padding:8px; box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:13px; margin-bottom:4px;">썸네일 경로</label>
+            <input type="text" name="thumbnail" maxlength="255" value="<?= htmlspecialchars($video['thumbnail'] ?? '') ?>"
+                   style="width:100%; padding:8px; box-sizing:border-box;">
+        </div>
+ 
+        <button type="submit" class="btn-write">수정 완료</button>
+        <a class="btn btn-ghost" href="/admin/videos.php" style="margin-left:8px;">목록으로</a>
+    </form>
+    <?php endif; ?>
+</div>
+ 
+<?php require __DIR__ . '/../includes/footer.php'; ?>
  
