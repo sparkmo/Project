@@ -59,11 +59,11 @@ try {
     // 씨네나잇(WebServer)이 예전 컬럼명(id/username)을 그대로 읽고 있으므로,
     // 응답 키는 WebServer 쪽 호환을 위해 유지합니다 (DB 컬럼명과는 별개).
     $response_member = [
-        'id'         => $member['member_id'],
-        'username'   => $member['login_id'],
-        'nickname'   => $member['nickname'],
-        'email'      => $member['email'],
-        'role'       => $member['role'],        // 추가
+        'id'       => $member['id'],
+        'username' => $member['email'],  // login_id 없으니 email로 대체
+        'nickname' => $member['name'],   // nickname → name
+        'email'    => $member['email'],
+        'role'     => $member['role'],
         'created_at' => $member['created_at'],
     ];
 
