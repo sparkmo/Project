@@ -91,3 +91,4 @@ try {
     error_log('api/inquiry.php ott 연결 실패: ' . $e->getMessage());
     api_fail(502, 'ott db unavailable');
 }
+ 
