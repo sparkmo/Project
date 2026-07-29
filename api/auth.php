@@ -3,7 +3,7 @@
  * api/auth.php
  *
  * 씨네나잇(OTT) 웹서버 ↔ 인트라넷 서버 간 서버-서버 로그인 인증 API.
- * ott_db.member 테이블 기준 (login_id, password bcrypt).
+ * ott.users 테이블 기준 (email/phone/password/name은 AES_ENCRYPT로 암호화되어 저장됨, login_id 없음).
  */
  
 require_once __DIR__ . '/../common.php';
@@ -78,3 +78,4 @@ try {
     error_log('api/auth.php ott 연결 실패: ' . $e->getMessage());
     api_fail(502, 'ott db unavailable');
 }
+ 
