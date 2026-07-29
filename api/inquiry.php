@@ -69,7 +69,7 @@ try {
         api_fail(400, 'username required');
     }
  
-    $stmt = $pdo_member->prepare("SELECT id FROM users WHERE AES_DECRYPT(email, '" . AES_KEY . "') = ?");
+    $stmt = $pdo_member->prepare("SELECT id FROM users WHERE CONVERT(AES_DECRYPT(email, UNHEX('" . AES_KEY . "')) USING utf8mb4) = ?");
     $stmt->execute([$login_id]);
     $member = $stmt->fetch();
     if (!$member) {
