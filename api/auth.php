@@ -42,11 +42,11 @@ try {
     // login_id 대신 email로 찾음 (users 테이블 구조)
     $stmt = $pdo_member->prepare(
         "SELECT id, role, created_at,
-                AES_DECRYPT(email,    '" . AES_KEY . "') AS email,
-                AES_DECRYPT(name,     '" . AES_KEY . "') AS name,
-                AES_DECRYPT(password, '" . AES_KEY . "') AS password_plain
+                CONVERT(AES_DECRYPT(email,    UNHEX('" . AES_KEY . "')) USING utf8mb4) AS email,
+                CONVERT(AES_DECRYPT(name,     UNHEX('" . AES_KEY . "')) USING utf8mb4) AS name,
+                CONVERT(AES_DECRYPT(password, UNHEX('" . AES_KEY . "')) USING utf8mb4) AS password_plain
          FROM users
-         WHERE AES_DECRYPT(email, '" . AES_KEY . "') = ?"
+         WHERE CONVERT(AES_DECRYPT(email, UNHEX('" . AES_KEY . "')) USING utf8mb4) = ?"
     );
     $stmt->execute([$login_id]); // 씨네나잇은 username 필드로 받지만 실제론 email로 매핑
     
