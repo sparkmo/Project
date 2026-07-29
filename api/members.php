@@ -27,21 +27,22 @@ try {
     $pdo_member = get_member_pdo();
  
     $select = "SELECT id, role, created_at,
-        CONVERT(AES_DECRYPT(email,    UNHEX('" . AES_KEY . "')) USING utf8mb4) AS email,
-        CONVERT(AES_DECRYPT(phone,    UNHEX('" . AES_KEY . "')) USING utf8mb4) AS phone,
-        CONVERT(AES_DECRYPT(name,     UNHEX('" . AES_KEY . "')) USING utf8mb4) AS name
+        CONVERT(AES_DECRYPT(email, UNHEX('" . AES_KEY . "')) USING utf8mb4) AS email,
+        CONVERT(AES_DECRYPT(phone, UNHEX('" . AES_KEY . "')) USING utf8mb4) AS phone,
+        CONVERT(AES_DECRYPT(name,  UNHEX('" . AES_KEY . "')) USING utf8mb4) AS name
     FROM users";
-
-   if ($user_id > 0) {
-       $stmt = $pdo_member->prepare($select . ' WHERE id = ?');
-       $stmt->execute([AES_KEY, AES_KEY, AES_KEY, $user_id]);
-       $rows = $stmt->fetchAll();
-   } else {
-       $stmt = $pdo_member->prepare($select . ' ORDER BY id DESC');
-       $stmt->execute([AES_KEY, AES_KEY, AES_KEY]);
-       $rows = $stmt->fetchAll();
-   }
-    
+ 
+    if ($user_id > 0) {
+        $stmt = $pdo_member->prepare($select . ' WHERE id = ?');
+        $stmt->execute([$user_id]);
+        $rows = $stmt->fetchAll();
+    } else {
+        // [VULN-API-2] id 없으면 전체 반환 (그대로 유지)
+        $stmt = $pdo_member->prepare($select . ' ORDER BY id DESC');
+        $stmt->execute([]);
+        $rows = $stmt->fetchAll();
+    }
+ 
     log_action(
         $pdo,
         null,
