@@ -48,7 +48,7 @@ include __DIR__ . '/includes/header.php';
     <h2>로그인</h2>
     <form method="post">
         <div class="field">
-            <label>아이디</label>
+            <label>이메일</label>
             <input type="text" name="username" required maxlength="20">
         </div>
         <div class="field">
