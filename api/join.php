@@ -50,8 +50,10 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 try {
     $pdo_member = get_member_pdo();
 
-    $stmt = $pdo_member->prepare('SELECT member_id FROM member WHERE login_id = ?');
-    $stmt->execute([$login_id]);
+    $stmt = $pdo_member->prepare(
+    "SELECT id FROM users WHERE AES_DECRYPT(email, 'b3bc88d7a82fc5843ded886d04c490fe9f044d5c396f0942feb8a38594ec36e7') = ?"
+    );
+    $stmt->execute([$email]);
     if ($stmt->fetch()) {
         api_fail(409, '이미 사용 중인 아이디입니다.');
     }
