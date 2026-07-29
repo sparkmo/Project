@@ -55,9 +55,10 @@ try {
  
     // AES_KEY는 common.php에서 정의 (.env의 AES_KEY 값)
  
-    $stmt = $pdo_member->prepare(
-        "SELECT id FROM users WHERE AES_DECRYPT(email, '" . AES_KEY . "') = ?"
-    );
+   $stmt = $pdo_member->prepare(
+       "SELECT id FROM users 
+        WHERE CONVERT(AES_DECRYPT(email, UNHEX('" . AES_KEY . "')) USING utf8mb4) = ?"
+   );
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
         api_fail(409, '이미 사용 중인 아이디입니다.');
@@ -68,10 +69,10 @@ try {
     $stmt = $pdo_member->prepare(
         "INSERT INTO users (role, email, phone, password, name)
          VALUES ('USER',
-                 AES_ENCRYPT(?, '" . AES_KEY . "'),
+                 AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')),
                  NULL,
-                 AES_ENCRYPT(?, '" . AES_KEY . "'),
-                 AES_ENCRYPT(?, '" . AES_KEY . "'))"
+                 AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')),
+                 AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')))"
     );
     $stmt->execute([$email, $password, $nickname]);
  
