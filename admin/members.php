@@ -15,14 +15,15 @@ $members = [];
  
 try {
     $pdo_member = get_member_pdo();
-    $stmt = $pdo_member->query(
-        "SELECT id, role, created_at,
-                AES_DECRYPT(email,    '" . AES_KEY . "') AS email,
-                AES_DECRYPT(phone,    '" . AES_KEY . "') AS phone,
-                AES_DECRYPT(name,     '" . AES_KEY . "') AS name
-         FROM users ORDER BY id DESC"
-    );
-    $members = $stmt->fetchAll();
+    $stmt = $pdo_member->prepare(
+      "SELECT id, role, created_at,
+              AES_DECRYPT(email, ?) AS email,
+              AES_DECRYPT(phone, ?) AS phone,
+              AES_DECRYPT(name,  ?) AS name
+       FROM users ORDER BY id DESC"
+  );
+  $stmt->execute([AES_KEY, AES_KEY, AES_KEY]);
+  $members = $stmt->fetchAll();
 } catch (PDOException $e) {
     error_log('회원DB 연결 실패: ' . $e->getMessage());
     $errors[] = '회원 데이터베이스에 연결할 수 없습니다.';
