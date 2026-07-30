@@ -15,8 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password2= $_POST['password2'] ?? '';
     $nickname = trim($_POST['nickname'] ?? '');
     $email    = trim($_POST['email'] ?? '');
+    $phone    = trim($_POST['phone'] ?? '');
 
-    if ($username === '' || $password === '' || $nickname === '' || $email === '') {
+    if ($username === '' || $password === '' || $nickname === '' || $email === '' || $phone === '') {
         alert_back('모든 항목을 입력해주세요.');
     }
     if (!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $username)) {
@@ -31,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         alert_back('올바른 이메일 형식이 아닙니다.');
     }
+    // 하이픈 있어도/없어도 허용 후 숫자만 남겨서 정규화 (010-1234-5678, 01012345678 등)
+    $phone_digits = preg_replace('/\D/', '', $phone);
+    if (!preg_match('/^0\d{9,10}$/', $phone_digits)) {
+        alert_back('올바른 전화번호 형식이 아닙니다. (예: 010-1234-5678)');
+    }
 
     // 회원 DB는 이 서버에서 직접 접속할 수 없으므로, 인트라넷 API로 가입 처리를 위임한다.
     // (비밀번호 해시도 이 서버가 아니라 인트라넷 서버에서 생성한다)
@@ -39,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'password' => $password,
         'nickname' => $nickname,
         'email'    => $email,
+        'phone'    => $phone_digits,
     ]);
 
     if (!($data['ok'] ?? false)) {
@@ -73,6 +80,10 @@ include __DIR__ . '/includes/header.php';
         <div class="field">
             <label>이메일</label>
             <input type="email" name="email" required maxlength="100">
+        </div>
+        <div class="field">
+            <label>전화번호</label>
+            <input type="tel" name="phone" required maxlength="20" placeholder="010-1234-5678">
         </div>
         <button type="submit" class="btn-submit">가입하기</button>
     </form>

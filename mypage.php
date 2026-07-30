@@ -8,7 +8,8 @@ require_login();
 $page_title = '마이페이지';
 
 // 회원 DB는 이 서버에서 직접 접속할 수 없으므로, 인트라넷 API로 조회를 위임한다.
-// (참고: api/members.php는 login_id/nickname/email/created_at 컬럼을 그대로 응답합니다)
+// (api/members.php는 id, role, created_at, email, phone, name 컬럼을 응답합니다.
+//  username(email)로 본인 한 명만 조회합니다)
 $member_data = intranet_api_get(INTRANET_API_MEMBERS, ['username' => $_SESSION['username']]);
 $user = $member_data['members'][0] ?? null;
 if (!$user) {
@@ -23,12 +24,12 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <div class="profile-box">
-    <div class="avatar"><?= htmlspecialchars(u8_first_char($user['nickname'])) ?></div>
+    <div class="avatar"><?= htmlspecialchars(u8_first_char($user['name'])) ?></div>
     <div>
-        <h2 style="margin:0 0 4px;"><?= htmlspecialchars($user['nickname']) ?></h2>
+        <h2 style="margin:0 0 4px;"><?= htmlspecialchars($user['name']) ?></h2>
         <p style="margin:0; color:var(--text-dim); font-size:13px;">
-            @<?= htmlspecialchars($user['login_id']) ?> ·
             <?= htmlspecialchars($user['email']) ?> ·
+            <?= htmlspecialchars($user['phone'] ?? '-') ?> ·
             가입일 <?= htmlspecialchars($user['created_at']) ?>
         </p>
     </div>

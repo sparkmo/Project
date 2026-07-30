@@ -14,7 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     if ($username === '' || $password === '') {
-        alert_back('아이디와 비밀번호를 입력해주세요.');
+        alert_back('이메일과 비밀번호를 입력해주세요.');
+    }
+    if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        alert_back('올바른 이메일 형식이 아닙니다.');
     }
 
     // 회원 DB는 이 서버에서 직접 접속할 수 없으므로, 인트라넷 API로 인증을 위임한다.
@@ -49,7 +52,7 @@ include __DIR__ . '/includes/header.php';
     <form method="post">
         <div class="field">
             <label>이메일</label>
-            <input type="text" name="username" required maxlength="20">
+            <input type="email" name="username" required maxlength="100">
         </div>
         <div class="field">
             <label>비밀번호</label>
