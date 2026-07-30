@@ -22,23 +22,17 @@ function youtube_thumb($video_id) {
     return "https://img.youtube.com/vi/{$video_id}/hqdefault.jpg";
 }
 
-// 히어로 배경용 - 더 큰 해상도 썸네일
+// 히어로 배경용
 function hero_thumb($video) {
-    if ($video['thumbnail']) {
+    if (!empty($video['thumbnail'])) {
         return htmlspecialchars($video['thumbnail']);
-    }
-    if ($video['video_type'] === 'youtube') {
-        return "https://img.youtube.com/vi/{$video['video_source']}/sddefault.jpg";
     }
     return '/css/no-thumb.png';
 }
 
 function render_thumb($video) {
-    if ($video['thumbnail']) {
+    if (!empty($video['thumbnail'])) {
         return htmlspecialchars($video['thumbnail']);
-    }
-    if ($video['video_type'] === 'youtube') {
-        return youtube_thumb($video['video_source']);
     }
     return '/css/no-thumb.png';
 }
@@ -59,7 +53,7 @@ include __DIR__ . '/includes/header.php';
                 <span class="hero-tag">ONLY</span>
                 <h1 class="hero-title"><?= htmlspecialchars($h['title']) ?></h1>
                 <p class="hero-sub"><?= htmlspecialchars(u8_truncate($h['description'] ?? '', 40)) ?></p>
-                <a class="hero-btn" href="/view.php?id=<?= (int)$h['id'] ?>">지금 재생하기</a>
+                <a class="hero-btn" href="/view.php?id=<?= (int)$h['video_id'] ?>">지금 재생하기</a>
             </div>
         </div>
     <?php endforeach; ?>
@@ -118,7 +112,7 @@ include __DIR__ . '/includes/header.php';
     <h2 class="section-title"><?= CATEGORIES[$key] ?></h2>
     <div class="video-grid">
         <?php foreach ($list as $v): ?>
-            <a class="video-card" href="/view.php?id=<?= (int)$v['id'] ?>">
+            <a class="video-card" href="/view.php?id=<?= (int)$v['video_id'] ?>">
                 <div class="video-thumb">
                     <img src="<?= render_thumb($v) ?>" alt="<?= htmlspecialchars($v['title']) ?>" loading="lazy">
                 </div>
@@ -126,7 +120,7 @@ include __DIR__ . '/includes/header.php';
                     <p class="v-title"><?= htmlspecialchars($v['title']) ?></p>
                     <div class="v-meta">
                         <span><?= CATEGORIES[$v['category']] ?? $v['category'] ?></span>
-                        <span>조회 <?= (int)$v['view_count'] ?></span>
+                        <span><?= htmlspecialchars($v['upload_date']) ?></span>
                     </div>
                 </div>
             </a>
