@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!preg_match('/^0\d{9,10}$/', $phone_digits)) {
         alert_back('올바른 전화번호 형식이 아닙니다.');
     }
+    $phone = $phone1 . '-' . $phone2 . '-' . $phone3; // DB에는 하이픈 포함해서 저장
 
     // 회원 DB는 이 서버에서 직접 접속할 수 없으므로, 인트라넷 API로 가입 처리를 위임한다.
     // (비밀번호 해시도 이 서버가 아니라 인트라넷 서버에서 생성한다)
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'password' => $password,
         'nickname' => $nickname,
         'email'    => $email,
-        'phone'    => $phone_digits,
+        'phone'    => $phone,
     ]);
 
     if (!($data['ok'] ?? false)) {

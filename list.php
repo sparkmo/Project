@@ -23,10 +23,8 @@ $videos      = $data['videos'] ?? [];
 $total       = (int)($data['total'] ?? 0);
 $total_pages = (int)($data['total_pages'] ?? 1);
 
-function yt_thumb($id) { return "https://img.youtube.com/vi/{$id}/hqdefault.jpg"; }
 function thumb_of($v) {
-    if ($v['thumbnail']) return htmlspecialchars($v['thumbnail']);
-    if ($v['video_type'] === 'youtube') return yt_thumb($v['video_source']);
+    if (!empty($v['thumbnail'])) return htmlspecialchars($v['thumbnail']);
     return '/css/no-thumb.png';
 }
 
@@ -49,7 +47,7 @@ include __DIR__ . '/includes/header.php';
 <?php else: ?>
     <div class="video-grid">
         <?php foreach ($videos as $v): ?>
-            <a class="video-card" href="/view.php?id=<?= (int)$v['id'] ?>">
+            <a class="video-card" href="/view.php?id=<?= (int)$v['video_id'] ?>">
                 <div class="video-thumb">
                     <img src="<?= thumb_of($v) ?>" alt="<?= htmlspecialchars($v['title']) ?>" loading="lazy">
                 </div>
@@ -57,8 +55,7 @@ include __DIR__ . '/includes/header.php';
                     <span class="badge-category"><?= CATEGORIES[$v['category']] ?? $v['category'] ?></span>
                     <p class="v-title"><?= htmlspecialchars($v['title']) ?></p>
                     <div class="v-meta">
-                        <span><?= htmlspecialchars($v['nickname']) ?></span>
-                        <span>조회 <?= (int)$v['view_count'] ?></span>
+                        <span><?= htmlspecialchars($v['upload_date']) ?></span>
                     </div>
                 </div>
             </a>
