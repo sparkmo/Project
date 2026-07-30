@@ -51,8 +51,8 @@ if (strlen($password) < 6) {
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     api_fail(400, '올바른 이메일 형식이 아닙니다.');
 }
-// 웹서버 쪽에서 이미 숫자만 정규화해서 보내지만, 서버-서버 API도 자체 검증한다
-if (!preg_match('/^0\d{9,10}$/', $phone)) {
+// 웹서버가 010-1234-5678 형식(하이픈 포함)으로 보내며, 그대로 DB에 저장한다
+if (!preg_match('/^0\d{1,2}-\d{3,4}-\d{4}$/', $phone)) {
     api_fail(400, '올바른 전화번호 형식이 아닙니다.');
 }
  
