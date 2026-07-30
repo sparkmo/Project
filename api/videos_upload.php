@@ -30,6 +30,7 @@ $title        = trim($_POST['title'] ?? '');
 $description  = trim($_POST['description'] ?? '');
 $thumbnail    = trim($_POST['thumbnail'] ?? '');
 $category     = trim($_POST['category'] ?? 'general');
+$video_file   = trim($_POST['video_file'] ?? '');
  
 if ($title === '') {
     api_fail(400, '제목은 필수입니다.');
@@ -39,10 +40,16 @@ try {
     $pdo_member = get_member_pdo();
  
     $stmt = $pdo_member->prepare(
-        'INSERT INTO video (title, description, thumbnail, category)
-         VALUES (?, ?, ?, ?)'
+        'INSERT INTO video (title, description, thumbnail, category, video_file)
+         VALUES (?, ?, ?, ?, ?)'
     );
-    $stmt->execute([$title, $description, $thumbnail !== '' ? $thumbnail : null, $category !== '' ? $category : 'general']);
+    $stmt->execute([
+        $title,
+        $description,
+        $thumbnail !== '' ? $thumbnail : null,
+        $category !== '' ? $category : 'general',
+        $video_file !== '' ? $video_file : null,
+    ]);
  
     $new_id = (int)$pdo_member->lastInsertId();
  

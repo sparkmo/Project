@@ -5,7 +5,8 @@
  * 씨네나잇(OTT) 웹서버 ↔ 인트라넷 서버 간 서버-서버 영상 조회 대행 API.
  *
  * ott_db 최종 스키마: video 테이블은 회원과 관계를 갖지 않습니다(독립).
- * 컬럼: video_id, title, description, thumbnail, category, upload_date
+ * 컬럼: video_id, title, description, thumbnail, category, upload_date, video_file
+ * (video_file: youtube:{id} / file:{저장된 파일명} / https://... 외부 URL 중 하나)
  * (기존의 writer_id/video_type/video_source/view_count는 새 스키마에 없습니다.)
  *
  * 지원 파라미터 (전부 GET):
