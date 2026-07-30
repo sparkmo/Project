@@ -10,9 +10,9 @@ function is_login() {
     return isset($_SESSION['user_id']);
 }
 
-// 관리자 여부
+// 관리자 여부 (DB role 컬럼은 'ADMIN'/'USER' 대문자로 저장되어 있음)
 function is_admin() {
-    return is_login() && ($_SESSION['grade'] ?? '') === 'admin';
+    return is_login() && strtoupper($_SESSION['grade'] ?? '') === 'ADMIN';
 }
 
 // 현재 로그인한 사용자 정보 (세션에 있는 값만 간단히 반환)
