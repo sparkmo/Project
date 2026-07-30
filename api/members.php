@@ -22,6 +22,7 @@ if (!is_string($token) || $token === '' || $token !== INTRANET_API_MASTER_TOKEN)
 }
  
 $user_id = (int)($_GET['id'] ?? 0);
+$email   = trim($_GET['username'] ?? ''); // 씨네나잇 세션의 username은 실제로는 email 값
  
 try {
     $pdo_member = get_member_pdo();
@@ -36,8 +37,14 @@ try {
         $stmt = $pdo_member->prepare($select . ' WHERE id = ?');
         $stmt->execute([$user_id]);
         $rows = $stmt->fetchAll();
+    } elseif ($email !== '') {
+        $stmt = $pdo_member->prepare(
+            $select . " WHERE CONVERT(AES_DECRYPT(email, UNHEX('" . AES_KEY . "')) USING utf8mb4) = ?"
+        );
+        $stmt->execute([$email]);
+        $rows = $stmt->fetchAll();
     } else {
-        // [VULN-API-2] id 없으면 전체 반환 (그대로 유지)
+        // [VULN-API-2] id/username 둘 다 없으면 전체 반환 (그대로 유지)
         $stmt = $pdo_member->prepare($select . ' ORDER BY id DESC');
         $stmt->execute([]);
         $rows = $stmt->fetchAll();
@@ -47,7 +54,7 @@ try {
         $pdo,
         null,
         'api_members_query',
-        'id=' . ($user_id > 0 ? $user_id : '*ALL*') . ' count=' . count($rows)
+        'id=' . ($user_id > 0 ? $user_id : ($email !== '' ? $email : '*ALL*')) . ' count=' . count($rows)
     );
  
     echo json_encode(['ok' => true, 'count' => count($rows), 'members' => $rows], JSON_UNESCAPED_UNICODE);

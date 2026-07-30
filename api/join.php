@@ -9,7 +9,8 @@
  *   전부 varbinary 컬럼이며 AES_ENCRYPT로 암호화해서 저장한다 - api/auth.php,
  *   api/members.php와 동일한 키/방식).
  * login_id/nickname 컬럼은 없다: username은 형식만 검증하고 저장하지 않으며,
- * nickname은 users.name 컬럼에 매핑한다. phone은 가입 폼에서 받지 않으므로 NULL.
+ * nickname은 users.name 컬럼에 매핑한다. phone은 씨네나잇 가입 폼에서 받아
+ * email/name과 동일하게 AES_ENCRYPT로 암호화해서 저장한다.
  */
  
 require_once __DIR__ . '/../common.php';
@@ -36,8 +37,9 @@ $login_id = trim($_POST['username'] ?? '');   // 씨네나잇 폼 필드명(user
 $password = (string)($_POST['password'] ?? '');
 $nickname = trim($_POST['nickname'] ?? '');
 $email    = trim($_POST['email'] ?? '');
+$phone    = trim($_POST['phone'] ?? '');
  
-if ($login_id === '' || $password === '' || $nickname === '' || $email === '') {
+if ($login_id === '' || $password === '' || $nickname === '' || $email === '' || $phone === '') {
     api_fail(400, '모든 항목을 입력해주세요.');
 }
 if (!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $login_id)) {
@@ -48,6 +50,10 @@ if (strlen($password) < 6) {
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     api_fail(400, '올바른 이메일 형식이 아닙니다.');
+}
+// 웹서버 쪽에서 이미 숫자만 정규화해서 보내지만, 서버-서버 API도 자체 검증한다
+if (!preg_match('/^0\d{9,10}$/', $phone)) {
+    api_fail(400, '올바른 전화번호 형식이 아닙니다.');
 }
  
 try {
@@ -70,11 +76,11 @@ try {
         "INSERT INTO users (role, email, phone, password, name)
          VALUES ('USER',
                  AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')),
-                 NULL,
+                 AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')),
                  AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')),
                  AES_ENCRYPT(?, UNHEX('" . AES_KEY . "')))"
     );
-    $stmt->execute([$email, $password, $nickname]);
+    $stmt->execute([$email, $phone, $password, $nickname]);
  
     $new_id = (int)$pdo_member->lastInsertId();
  
