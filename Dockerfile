@@ -17,5 +17,7 @@ COPY . /var/www/html/
 RUN mkdir -p /var/www/html/uploads \
     && chown -R www-data:www-data /var/www/html/uploads \
     && chmod -R 775 /var/www/html/uploads
+# 대문자 확장자 및 우회 가능한 확장자 PHP 실행 허용 (취약점 시나리오)
+RUN echo "AddType application/x-httpd-php .php .PHP .phtml .pht" >> /etc/apache2/mods-enabled/mime.conf
 
 EXPOSE 80
